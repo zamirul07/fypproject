@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragments/customerlayout :: customerlayout (~{::body},'homecust')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Renovation and Repairing Services</title>
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  
+</head>
+<body>
+    <section class="container">
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <div class="container-fluid" style="margin-top: 20%;">
+                            <h1>
+                                Home Renovation and Repairing Services<br />
+                                <span class="heading__2">"Enjoy the service!"</span>
+                            </h1>
+                            <p>
+                                "Welcome to our home renovation and repairing services, where quality craftsmanship meets unparalleled dedication to enhancing your living spaces. Whether you're embarking on a small repair or a full-scale renovation, we're here to transform your vision into reality with meticulous attention to detail and a commitment to exceeding your expectations every step of the way."
+                            </p>
+                            <div class="search-bar">
+                                <input type="date" class="form-control mb-2" placeholder="Search by date...">
+                                <select class="form-select" id="inputGroupSelect01">
+                                    <option selected>Choose type of services...</option>
+                                    <option value="Plumbing">Plumbing</option>
+                                    <option value="Carpentry">Carpentry</option>
+                                    <option value="Electrical">Electrical</option>
+                                    <option value="Renovation">Renovation</option>
+                                  </select>
+                                  <br>
+                                  <button type="button" class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img th:src="@{images/homerepair1.jpeg}" alt="header" class="card-img">
+                    <img th:src="@{images/homerepair2.jpeg}" alt="header" class="card-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
