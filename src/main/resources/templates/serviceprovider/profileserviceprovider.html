@@ -1,94 +1,297 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/serviceproviderlayout :: serviceproviderlayout (~{::body},'profileserviceprovider')}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home Renovation and Repairing Services</title>
-    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  
-</head>
-<body style="background-color: #dfdfdf">
-    <nav class="navbar navbar-expand-lg">
-    </nav>
+<html
+  lang="en"
+  th:replace="~{fragments/serviceproviderlayout :: serviceproviderlayout (~{::body},'profileserviceprovider')}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Profile</title>
+    <link
+      th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <style>
+      .content {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
 
-    <!-- Form section -->
-    <div class="container-fluid" style="background-color:#dfdfdf;">
-        <div class="container-fluid card col-7 mt-4" style="background-color:#dfdfdf;">
-            <form id="providerProfileForm" style="margin: 180px 40px 43px 40px;" class="p-3" method="post" th:action="@{/provider-profile}" modelAttribute="providerProfile">
-                <h1 class="text-center">SERVICE PROVIDER PROFILE</h1>
-                <div class="row mt-3">
-                    <div class="col">
-                        <label for="providerfullname">Full Name</label>
-                        <input type="text" class="form-control" id="providerfullname" aria-describedby="fullnameHelp" name="providerfullname" required>
-                    </div>
-                    <div class="col">
-                        <label for="provideremail">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="example: johndoe@gmail.com" name="email" required>
-                    </div>
-                    <div class="col">
-                        <label for="providerpassword">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="#####" name="password" required>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        <label for="provideraddress">Address</label>
-                        <input type="text" class="form-control" id="provideraddress" placeholder="Please fill your full address" name="provideraddress" required>
-                    </div>
-                    <div class="col">
-                        <label for="providericnumber">Identity Card Number (IC)</label>
-                        <input type="text" class="form-control" id="providericnumber" placeholder="000000-00-0000" pattern="\d{6}-\d{2}-\d{4}" name="providericnumber" required>
-                    </div>
-                    <div class="col">
-                        <label for="providerphonenum">Phone Number</label>
-                        <input type="tel" placeholder="0123456789" class="form-control" id="providerphonenum" pattern="[0-9]{10,11}" maxlength="11" name="providerphonenum" required>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        <label for="servicestype">Services Type</label>
-                        <input type="text" class="form-control" id="servicestype" name="servicestype" required>
-                    </div>
-                </div>
-                <div class="button-container mt-4">
-                    <button type="button" class="btn btn-danger col-10" data-bs-toggle="modal" data-bs-target="#confirmModal">SAVE CHANGES</button>
-                </div>
-            </form>
-        </div>
-    </div>
+      .service-card {
+        margin-bottom: 20px;
+      }
 
-    <!-- Confirmation Modal -->
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmModalLabel">Confirm Update</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to update your profile?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirmUpdate">Yes, Update</button>
-                </div>
+      .service-card .card-body {
+        padding: 20px;
+      }
+
+      .toggle-password {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body style="background-color: #dfdfdf">
+    <div class="container mt-2" style="height: 100%">
+      <div
+        class="card col-12 mt-2 ms-5"
+        style="width: 75rem; background-color: #dfdfdf"
+      >
+        <div class="d-flex flex justify-content-center mt-4">
+          <div class="col-4" style="margin: 8%">
+            <img
+              th:src="@{/images/profile.png}"
+              class="img-fluid rounded mt-5 ms-3"
+              style="width: 100%; height: 80%"
+            />
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <div class="card-body">
+              <div
+                class="container-fluid mt-2 justify-content-center rounded p-2"
+                style="background-color: #dfdfdf"
+              >
+                <p
+                  class="text-capitalize text-center mt-3 fw-bold"
+                  style="
+                    font-family: sans-serif;
+                    font-size: 24px;
+                    font-weight: bold;
+                  "
+                >
+                  WELCOME TO YOUR PROFILE
+                </p>
+                <form
+                  th:action="@{/updateProfile}"
+                  method="post"
+                  th:object="${profileserviceprovider}"
+                >
+                  <div>
+                    <input
+                      type="hidden"
+                      class="form-control"
+                      th:value="${ServiceProviderProfile.sid}"
+                      id="sid"
+                      name="sid"
+                      required
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="spfullname" class="form-label fw-semibold"
+                      >Name</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      th:value="${ServiceProviderProfile.spfullname}"
+                      id="spfullname"
+                      name="spfullname"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="email" class="form-label fw-semibold"
+                      >Email</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      th:value="${ServiceProviderProfile.email}"
+                      id="email"
+                      name="email"
+                      readonly
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="password" class="form-label fw-semibold"
+                      >Password</label
+                    >
+                    <div class="input-group">
+                      <input
+                        type="password"
+                        class="form-control"
+                        th:value="${ServiceProviderProfile.password}"
+                        id="password"
+                        name="password"
+                        required
+                      />
+                      <span
+                        class="input-group-text toggle-password"
+                        onclick="togglePassword()"
+                      >
+                        <img
+                          id="togglePasswordIcon"
+                          src="https://cdn.jsdelivr.net/npm/bootstrap-icons/icons/eye.svg"
+                          alt="Toggle Password Visibility"
+                        />
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="address" class="form-label fw-semibold"
+                      >Address</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      th:value="${ServiceProviderProfile.address}"
+                      id="address"
+                      name="address"
+                      required
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="icnumber" class="form-label fw-semibold"
+                      >IC Number</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      th:value="${ServiceProviderProfile.icnumber}"
+                      id="icnumber"
+                      name="icnumber"
+                      readonly
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="phonenumber" class="form-label fw-semibold"
+                      >Phone Number</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      th:value="${ServiceProviderProfile.phonenumber}"
+                      id="phonenumber"
+                      name="phonenumber"
+                      required
+                      maxlength="11"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="services" class="form-label fw-semibold"
+                      >Services</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      th:value="${ServiceProviderProfile.services}"
+                      id="services"
+                      name="services"
+                      required
+                    />
+                  </div>
+
+                  <!-- Trigger Modal -->
+                  <button
+                    type="button"
+                    class="btn btn-primary me-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmModal"
+                  >
+                    Save Changes
+                  </button>
+
+                  <button
+                    type="submit"
+                    th:formaction="@{/deleteProfile}"
+                    class="btn btn-danger"
+                  >
+                    Delete
+                  </button>
+
+                  <!-- Confirmation Modal -->
+                  <div
+                    class="modal fade"
+                    id="confirmModal"
+                    tabindex="-1"
+                    aria-labelledby="confirmModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="confirmModalLabel">
+                            Confirm Changes
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          Are you sure you want to make these changes?
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Cancel
+                          </button>
+                          <button type="submit" class="btn btn-primary">
+                            Confirm
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="py-3 bg-dark text-white">
-        <div class="container-fluid">
-            <p class="m-0 text-center">Copyright &copy; 2024 <a href="#">HOME RENOVATION AND REPAIRING SERVICES</a></p>
-        </div>
-    </footer>
+    <br />
 
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+      integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
     <script>
-        document.getElementById('confirmUpdate').addEventListener('click', function () {
-            document.getElementById('providerProfileForm').submit();
-        });
+      function togglePassword() {
+        var passwordField = document.getElementById("password");
+        var passwordFieldType = passwordField.getAttribute("type");
+        var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+
+        if (passwordFieldType === "password") {
+          passwordField.setAttribute("type", "text");
+          togglePasswordIcon.src =
+            "https://cdn.jsdelivr.net/npm/bootstrap-icons/icons/eye-slash.svg";
+        } else {
+          passwordField.setAttribute("type", "password");
+          togglePasswordIcon.src =
+            "https://cdn.jsdelivr.net/npm/bootstrap-icons/icons/eye.svg";
+        }
+      }
     </script>
-</body>
+  </body>
 </html>

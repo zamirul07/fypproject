@@ -9,9 +9,11 @@ public class ServiceProvider {
     private String address;
     private String icnumber;
     private String phonenumber;
-    private String services;
+    private String service_name;
 
-    public ServiceProvider(Integer sid,  String spfullname, String email, String password, String address,  String icnumber,  String phonenumber, String services) {
+public ServiceProvider() {}
+
+    public ServiceProvider(Integer sid,  String spfullname, String email, String password, String address,  String icnumber,  String phonenumber, String service_name) {
         this.sid = sid;
         this.spfullname = spfullname;
         this.email = email;
@@ -19,7 +21,7 @@ public class ServiceProvider {
         this.address = address;      
         this.icnumber = icnumber;
         this.phonenumber = phonenumber;
-        this.services = services;
+        this.service_name = service_name;
        
     }
 
@@ -86,12 +88,12 @@ public class ServiceProvider {
         this.phonenumber = phonenumber;
     }
 
-    public String getServices() {
-        return services;
+    public String getService_name() {
+        return service_name;
     }
 
-    public void setServices(String services) {
-        this.services = services;
+    public void setService_name(String service_name) {
+        this.service_name = service_name;
     }
 }
 

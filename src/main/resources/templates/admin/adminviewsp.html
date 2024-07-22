@@ -26,8 +26,10 @@
 </head>
 <body>
     <div class="content">
-        <h2 class="mb-4">Plumbing Services</h2> <!-- Title added here -->
-        <button type="button" class="btn btn-primary mb-3">Add Service Provider</button>
+        <h2 class="mb-4">Service Provider</h2> <!-- Title added here -->
+        
+        <!-- Redirect button to createsp page -->
+        <a th:href="@{/createsp}" class="btn btn-primary mb-3">Add Service Provider</a>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -47,13 +49,13 @@
             <tbody>
                 <tr th:each="serviceprovider : ${serviceprovider}">
                     <td th:text="${serviceprovider.sid}"></td>
-                    <td th:text="${serviceprovider.fullname}"></td>
+                    <td th:text="${serviceprovider.spfullname}"></td>
                     <td th:text="${serviceprovider.email}"></td>
                     <td th:text="${serviceprovider.password}"></td>
                     <td th:text="${serviceprovider.address}"></td>
                     <td th:text="${serviceprovider.icnumber}"></td>
                     <td th:text="${serviceprovider.phonenumber}"></td>
-                    <td th:text="${serviceprovider.services}"></td>
+                    <td th:text="${serviceprovider.service_name}"></td>
                     <td>
                         <div class="d-flex">
                         <button type="button" class="btn btn-danger btn-sm">Delete</button>

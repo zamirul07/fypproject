@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Alike&family=Inter&display=swap");
+*   .navbar {
+    background-color: #f39d7d;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+}
+
+.navbar a {
+    color: white;
+}
+
+.navbar a:hover {
+    color: black; /* Change color to black on hover */
+    text-decoration: none; /* Optional: Remove underline on hover */
+}
+
+.navbar-brand {
+    cursor: default; /* Prevent cursor change to pointer */
+}
+
+.navbar-brand img {
+    max-height: 40px; /* Adjust the height as needed */
+    margin-right: 10px; /* Optional margin */
+    pointer-events: none; /* Disable click events on the logo */
+}
+
+.navbar-brand-text {
+    pointer-events: none; /* Disable click events on the text */
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-container {
+    background-color: #fff; /* Example background color for the form container */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Example box shadow */
+    width: 100%;
+    max-width: 400px; /* Adjust maximum width as needed */
+}
+
+.login-box header {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    margin-bottom: 15px;
+    padding-right: 40px; /* Add padding to make space for the icon */
+}
+
+.toggle-password {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.input-submit {
+    text-align: center;
+}
+
+.submit-btn {
+    background-color: #f39d7d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #d86c55;
+}
+
+.sign-up-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.sign-up-link a {
+    color: #f39d7d;
+}
+
+.sign-up-link a:hover {
+    text-decoration: underline;
+}
+
+/* Footer styles */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+.carousel-container {
+  max-width: 700px;
+  min-height: 70vh; /* Adjust the value as needed */
+  margin-bottom: 20px; /* Adjust the value as needed */
+}
+
+.search-sec {
+  padding: 2rem;
+}
+.search-slt {
+  display: block;
+  width: 100%;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #55595c;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  height: calc(3rem + 2px) !important;
+  border-radius: 0;
+}
+.wrn-btn {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: capitalize;
+  height: calc(3rem + 2px) !important;
+  border-radius: 0;
+}
+
+

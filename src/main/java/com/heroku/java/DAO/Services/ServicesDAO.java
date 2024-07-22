@@ -13,39 +13,56 @@ import org.springframework.stereotype.Repository;
 
 import com.heroku.java.Model.Services;
 
-
 @Repository
 public class ServicesDAO {
-private final DataSource dataSource;
 
-public ServicesDAO(DataSource dataSource) {
-    this.dataSource = dataSource;
-}
+    private final DataSource dataSource;
 
-public List<Services> viewServices() throws SQLException{
-    List<Services> servicesList = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection()){
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM services");
+    public ServicesDAO(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
+    public List<Services> viewServices() throws SQLException {
+        List<Services> servicesList = new ArrayList<>();
+        String query = "SELECT * FROM services";
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            
             while (resultSet.next()) {
-                Integer service_id = resultSet.getInt("service_id");
-                String service_name = resultSet.getString("service_name");
-                String service_type = resultSet.getString("service_type");
-                String service_desc = resultSet.getString("service_desc");
-                
-
-                Services services = new Services(service_id, service_name, service_type, service_desc);
+                Services services = new Services();
+                services.setService_id(resultSet.getInt("service_id"));
+                services.setService_name(resultSet.getString("service_name"));
+                services.setService_type(resultSet.getString("service_type"));
+                services.setService_desc(resultSet.getString("service_desc"));
                 servicesList.add(services);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw e;
         }
         return servicesList;
     }
 
-    public List<Services> getViewServices() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<Services> getAllServices() throws SQLException {
+        List<Services> services = new ArrayList<>();
+        String selectAllServicesSql = "SELECT * FROM services";
+        try (Connection connection = dataSource.getConnection();
+             Statement selectStatement = connection.createStatement();
+             ResultSet resultSet = selectStatement.executeQuery(selectAllServicesSql)) {
+            
+            while (resultSet.next()) {
+                Services service = new Services();
+                service.setService_id(resultSet.getInt("service_id"));
+                service.setService_name(resultSet.getString("service_name"));
+                service.setService_desc(resultSet.getString("service_desc"));
+                service.setService_type(resultSet.getString("service_type"));
+                services.add(service);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return services;
     }
-    
 }

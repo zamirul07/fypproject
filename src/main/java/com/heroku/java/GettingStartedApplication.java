@@ -47,6 +47,10 @@ public class GettingStartedApplication {
         return "serviceprovider/homesp"; 
     }
 
+
+    
+
+
     @GetMapping("serviceprovider/plumbing")
     public String plumbing() {
         return "serviceprovider/plumbing"; 
@@ -71,12 +75,6 @@ public class GettingStartedApplication {
     @GetMapping("customer/paymenttrack")
     public String paymenttrack() {
         return "customer/paymenttrack"; 
-    }
-
-     
-    @GetMapping("serviceprovider/profileserviceprovider")
-    public String profileserviceprovider() {
-        return "serviceprovider/profileserviceprovider"; 
     }
 
     @GetMapping("serviceprovider/viewbooking")
