@@ -27,9 +27,7 @@
 <body>
 <div class="container">
     <div class="row justify-content-center">
-        <a th:href="@{/homecust}" class="btn btn-dark btn-back">
-            <i class="fas fa-arrow-left"></i> Go Back
-        </a>
+       
 
         <h3 class="text-center mb-4">
             <!-- <a th:href="@{/viewservices}" class="text-decoration-none"> -->
@@ -44,7 +42,7 @@
                     <th scope="col">Service Name</th>
                     <th scope="col">Service Type</th>
                     <th scope="col">Service Description</th>
-                    <th scope="col">Actions</th>
+                    <!-- <th scope="col">Actions</th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -52,13 +50,15 @@
                     <td th:text="${service.service_name}"></td>
                     <td th:text="${service.service_type}"></td>
                     <td th:text="${service.service_desc}"></td>
-                    <td>
-                        <!-- <button type="button" class="btn btn-danger btn-sm">Delete</button> -->
+                    <!-- <td>
+                        
                         <button type="button" class="btn btn-primary btn-sm">Book</button>
-                    </td>
+                    </td> -->
                 </tr>
                 </tbody>
             </table>
+          
+            <a href="/viewsp" class="btn btn-primary">BOOK</a>
         </div>
     </div>
 </div>

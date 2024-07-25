@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.heroku.java.DAO.Customer.CustomerViewServiceProviderDAO;
+import com.heroku.java.DAO.Services.ServicesDAO;
 import com.heroku.java.Model.ServiceProvider;
+import com.heroku.java.Model.Services;
 
 @Controller
 public class CustomerViewServiceProviderController {
@@ -21,17 +23,21 @@ public class CustomerViewServiceProviderController {
         this.customerviewServiceProviderDAO = customerviewServiceProviderDAO;
     }
 
+     @Autowired
+    private ServicesDAO serviceDAO;
+
      @GetMapping("/viewsp")
     public String customerviewServiceProvider(Model model, ServiceProvider serviceprovider) {
         try {
             List<ServiceProvider> serviceproviderList = customerviewServiceProviderDAO.customerviewServiceProvider();
             model.addAttribute("serviceprovider", serviceproviderList);
+            List<Services> services = serviceDAO.getAllServices();
+            model.addAttribute("services", services);
             return "customer/viewsp";
         } catch (SQLException e) {
             System.out.println("message : " + e.getMessage());
             return "customer/homecust";
         }
-    } 
 
-    
+    }
 }

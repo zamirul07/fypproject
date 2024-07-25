@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.heroku.java.DAO.Admin.CreateServiceProviderDAO;
+import com.heroku.java.DAO.Admin.DeleteServiceProviderDAO;
 import com.heroku.java.DAO.Services.ServicesDAO;
 import com.heroku.java.Model.ServiceProvider;
 import com.heroku.java.Model.Services;
@@ -19,6 +21,9 @@ public class CreateServiceProviderController {
 
     @Autowired
     private CreateServiceProviderDAO createserviceproviderDAO;
+
+    @Autowired
+    private DeleteServiceProviderDAO deleteserviceproviderDAO;
 
     @Autowired
     private ServicesDAO serviceDAO;
@@ -39,6 +44,16 @@ public class CreateServiceProviderController {
     public String addServiceProvider(ServiceProvider serviceprovider) {
         try {
             createserviceproviderDAO.addServiceprovider(serviceprovider);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/adminviewsp";
+    }
+
+    @PostMapping("/deletesp")
+    public String deleteServiceProvider(@RequestParam("sid") int sid) {
+        try {
+            deleteserviceproviderDAO.deleteServiceProvider(sid);
         } catch (SQLException e) {
             e.printStackTrace();
         }

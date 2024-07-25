@@ -48,7 +48,7 @@ public class ServiceProviderProfileDAO {
 
     public ServiceProvider updateProfile(ServiceProvider serviceprovider) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "UPDATE serviceprovider SET spfullname=?, email=?, password=?, address=?, icnumber=?, phonenumber=?, services=? WHERE sid=?";
+            String sql = "UPDATE serviceprovider SET spfullname=?, email=?, password=?, address=?, icnumber=?, phonenumber=?, service_name=? WHERE sid=?";
             final var statement = connection.prepareStatement(sql);
     
             String password = serviceprovider.getPassword();

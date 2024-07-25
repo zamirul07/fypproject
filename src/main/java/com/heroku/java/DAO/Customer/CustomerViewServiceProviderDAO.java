@@ -30,16 +30,16 @@ public List<ServiceProvider> customerviewServiceProvider() throws SQLException{
 
             while (resultSet.next()) {
                 Integer sid = resultSet.getInt("sid");
-                String fullname = resultSet.getString("fullname");
+                String spfullname = resultSet.getString("spfullname");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
                 String address = resultSet.getString("address");
                 String icnumber = resultSet.getString("icnumber");
                 String phonenumber = resultSet.getString("phonenumber");
-                String services = resultSet.getString("services");                
+                String service_name = resultSet.getString("service_name");                
                 
 
-                ServiceProvider serviceprovider = new ServiceProvider(sid, fullname, email, password, address, icnumber, phonenumber, services);
+                ServiceProvider serviceprovider = new ServiceProvider(sid, spfullname, email, password, address, icnumber, phonenumber, service_name);
                 serviceproviderList.add(serviceprovider);
             }
         } catch (SQLException e) {

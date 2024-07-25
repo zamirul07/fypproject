@@ -48,24 +48,7 @@ public class GettingStartedApplication {
     }
 
 
-    
 
-
-    @GetMapping("serviceprovider/plumbing")
-    public String plumbing() {
-        return "serviceprovider/plumbing"; 
-    }
-
-    @GetMapping("customer/booking")
-    public String booking() {
-        return "customer/booking"; 
-    }
-
-    
-    @GetMapping("customer/bookingstatus")
-    public String bookingstatus() {
-        return "customer/bookingstatus"; 
-    }
 
     @GetMapping("customer/payment")
     public String payment() {
