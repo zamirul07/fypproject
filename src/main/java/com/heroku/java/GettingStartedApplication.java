@@ -60,10 +60,7 @@ public class GettingStartedApplication {
         return "customer/paymenttrack"; 
     }
 
-    @GetMapping("serviceprovider/viewbooking")
-    public String viewbooking() {
-        return "serviceprovider/viewbooking"; 
-    }
+   
 
     @GetMapping("serviceprovider/approvepayment")
     public String approvepayment() {

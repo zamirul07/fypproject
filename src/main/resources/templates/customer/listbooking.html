@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/customerlayout :: customerlayout (~{::body},'bookingstatus')}">
+<html lang="en" th:replace="~{fragments/customerlayout :: customerlayout (~{::body},'listbooking')}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +18,7 @@
 </head>
 <body>
     <div class="content">
-        <h2 class="mb-4">Booking Status</h2>
+        <h2 class="mb-4">My Bookings</h2>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -27,11 +27,8 @@
                     <th scope="col">Service Provider Address</th>
                     <th scope="col">Service Provider Phone Number</th>
                     <th scope="col">Service Name</th>
-                    
-                    <!-- <th scope="col">Customer ID</th>
-                    <th scope="col">Service Provider ID</th> -->
                     <th scope="col">Date of Service</th>
-                    <th scope="col">Detail of Work</th>                 
+                    <th scope="col">Detail of Work</th>
                     <th scope="col">Booking Status</th>
                 </tr>
             </thead>
@@ -42,8 +39,6 @@
                     <td th:text="${booking.serviceProvider.address}"></td>
                     <td th:text="${booking.serviceProvider.phonenumber}"></td>
                     <td th:text="${booking.serviceProvider.service_name}"></td>
-                    <!-- <td th:text="${booking.id}"></td>
-                    <td th:text="${booking.sid}"></td> -->
                     <td th:text="${booking.bookingdate}"></td>
                     <td th:text="${booking.bookingdesc}"></td>
                     <td th:text="${booking.bookingstatus}"></td>

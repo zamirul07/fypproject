@@ -46,16 +46,21 @@ public class BookingController {
     }
 
     @PostMapping("/confirmBooking")
-    public String insertBooking(Booking booking) {
+    public String insertBooking(Booking booking, Model model) {
         try {
             System.out.println("customerid: "+ booking.getId());
             System.out.println("service provider id : "+ booking.getSid());
             System.out.println("booking date: "+ booking.getBookingdate());
             System.out.println("booking desc: "+ booking.getBookingdesc());
             bookingdao.insertBooking(booking);
+
+            System.out.println("bid post: " + booking.getBid());
+            return "redirect:/bookingstatus?bid= "+ booking.getBid() + "&sid=" + booking.getSid();
         } catch (SQLException e) {
             e.printStackTrace();
+            return "error";
         }
-        return "customer/bookingstatus";
     }
+
+    
 }

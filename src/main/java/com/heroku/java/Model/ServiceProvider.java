@@ -32,6 +32,13 @@ public ServiceProvider() {}
         this.password = password;   
     }
    
+    public ServiceProvider(String spfullname, String address, String phonenumber, String service_name) {
+        this.spfullname = spfullname;
+        this.address = address;
+        this.phonenumber = phonenumber;
+        this.service_name = service_name;
+    }
+
     public Integer getSid() {
         return sid;
     }

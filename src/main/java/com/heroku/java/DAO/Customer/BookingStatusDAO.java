@@ -1,7 +1,6 @@
 package com.heroku.java.DAO.Customer;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +12,7 @@ import javax.sql.DataSource;
 import org.springframework.stereotype.Repository;
 
 import com.heroku.java.Model.Booking;
+import com.heroku.java.Model.ServiceProvider;
 
 @Repository
 public class BookingStatusDAO {
@@ -22,37 +22,83 @@ public class BookingStatusDAO {
         this.dataSource = dataSource;
     }
 
-    public List<Booking> bookingstatus() throws SQLException {
-        List<Booking> bookingList = new ArrayList<>();
-        String sql = "SELECT b.bid, b.bookingdate, b.bookingdesc, b.bookingstatus, " +
-                     "sp.spfullname, sp.address AS spaddress, sp.phonenumber AS spphone, sp.service_name, " +
-                     "c.fullname AS customerfullname, c.address AS customeraddress " +
+    public List<Booking> getBookingByBookingId(int bid) throws SQLException {
+        List<Booking> bookings = new ArrayList<>();
+        System.out.println("bid get: " + bid);
+        
+        String sql = "SELECT b.bid, b.id, b.sid, b.bookingdate, b.bookingdesc, b.bookingstatus, " +
+                     "sp.spfullname, sp.address, sp.phonenumber, sp.service_name " +
                      "FROM booking b " +
                      "JOIN serviceprovider sp ON b.sid = sp.sid " +
-                     "JOIN customer c ON b.id = c.id";
-
+                     "WHERE b.bid = ?";
+        
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
-
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            
+            statement.setInt(1, bid);
+            ResultSet resultSet = statement.executeQuery();
+            
             while (resultSet.next()) {
-                Integer bid = resultSet.getInt("bid");
-                Date bookingDate = resultSet.getDate("bookingdate");
-                String bookingDesc = resultSet.getString("bookingdesc");
-                String bookingStatus = resultSet.getString("bookingstatus");
-                String spFullname = resultSet.getString("spfullname");
-                String spAddress = resultSet.getString("spaddress");
-                String spPhone = resultSet.getString("spphone");
-                String serviceName = resultSet.getString("service_name");
-                String customerFullname = resultSet.getString("customerfullname");
-                String customerAddress = resultSet.getString("customeraddress");
-
-                Booking booking = new Booking(bid, bookingDate, bookingDesc, bookingStatus, spFullname, spAddress, spPhone, serviceName, customerFullname, customerAddress);
-                bookingList.add(booking);
+                Booking booking = new Booking();
+                booking.setBid(resultSet.getInt("bid"));
+                booking.setId(resultSet.getInt("id"));
+                booking.setSid(resultSet.getInt("sid"));
+                booking.setBookingdate(resultSet.getDate("bookingdate"));
+                booking.setBookingdesc(resultSet.getString("bookingdesc"));
+                booking.setBookingstatus(resultSet.getString("bookingstatus"));
+                
+                ServiceProvider serviceProvider = new ServiceProvider();
+                serviceProvider.setSpfullname(resultSet.getString("spfullname"));
+                serviceProvider.setAddress(resultSet.getString("address"));
+                serviceProvider.setPhonenumber(resultSet.getString("phonenumber"));
+                serviceProvider.setService_name(resultSet.getString("service_name"));
+                
+                booking.setServiceProvider(serviceProvider);
+                bookings.add(booking);
             }
         } catch (SQLException e) {
-            throw e;
+            throw new SQLException("Error fetching bookings by booking ID: " + bid, e);
         }
-        return bookingList;
+        
+        return bookings;
+    }
+
+    public List<Booking> getBookingsByCustomerId(int customerId) throws SQLException {
+        List<Booking> bookings = new ArrayList<>();
+        String sql = "SELECT b.bid, b.id, b.sid, b.bookingdate, b.bookingdesc, b.bookingstatus, " +
+                     "sp.spfullname, sp.address, sp.phonenumber, sp.service_name " +
+                     "FROM booking b " +
+                     "JOIN serviceprovider sp ON b.sid = sp.sid " +
+                     "WHERE b.id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, customerId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Booking booking = new Booking();
+                booking.setBid(resultSet.getInt("bid"));
+                booking.setId(resultSet.getInt("id"));
+                booking.setSid(resultSet.getInt("sid"));
+                booking.setBookingdate(resultSet.getDate("bookingdate"));
+                booking.setBookingdesc(resultSet.getString("bookingdesc"));
+                booking.setBookingstatus(resultSet.getString("bookingstatus"));
+
+                ServiceProvider serviceProvider = new ServiceProvider();
+                serviceProvider.setSpfullname(resultSet.getString("spfullname"));
+                serviceProvider.setAddress(resultSet.getString("address"));
+                serviceProvider.setPhonenumber(resultSet.getString("phonenumber"));
+                serviceProvider.setService_name(resultSet.getString("service_name"));
+
+                booking.setServiceProvider(serviceProvider);
+                bookings.add(booking);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching bookings by customer ID: " + customerId, e);
+        }
+
+        return bookings;
     }
 }

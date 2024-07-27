@@ -1,83 +1,68 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/serviceproviderlayout :: serviceproviderlayout (~{::body},'viewbooking')}">
+<html lang="en" th:replace="~{fragments/serviceproviderlayout :: serviceproviderlayout (~{::body},'listbooking')}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home Renovation and Repairing Services</title>
+    <title>Booking Status</title>
     <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #e0f7fa;
-            margin: 0;
-        }
-
-        .container {
-            margin-top: 50px;
-            margin-left: 250px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .content {
+            margin-top: 20px;
             padding: 20px;
-        }
-
-        .btn-approve {
-            background-color: #4caf50; /* Green */
-            color: white;
-        }
-
-        .btn-reject {
-            background-color: #f44336; /* Red */
-            color: white;
+            background-color: #fff; /* Light background */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <div class="container-fluid card col-7 mt-4" style="background-color:#dfdfdf;">
-        <h2 class="text-center">Booking Details</h2>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="customerFullName" class="form-label">Customer Full Name</label>
-                <input type="text" id="customerFullName" class="form-control" value="Nur Athirah Farhani Binti Arsyidi" readonly />
-            </div>
-            <div class="col-md-6">
-                <label for="dateOfService" class="form-label">Date for Service</label>
-                <input type="text" id="customerIcNumber" class="form-control" value="10-07-2024" readonly />
-            </div>
-            <div class="col-md-6">
-                <label for="typeofservices" class="form-label">Type of Services</label>
-                <input type="text" id="customerIcNumber" class="form-control" value="Plumbing" readonly />
-            </div>
-            <div class="col-md-6">
-                <label for="customerPhone" class="form-label">Customer Phone Number</label>
-                <input type="text" id="customerPhone" class="form-control" value="01111672622" readonly />
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="customerAddress" class="form-label">Customer Address</label>
-                <input type="text" id="customerAddress" class="form-control" value="No 47 Jalan Budi 3 Taman Budi 45200 Sabak Bernam Selangor" readonly />
-            </div>
-            <div class="col-md-6">
-                <label for="customerIcNumber" class="form-label">Customer IC Number</label>
-                <input type="text" id="customerIcNumber" class="form-control" value="011214-10-1004" readonly />
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="workDetails" class="form-label">Detail of Work</label>
-            <textarea class="form-control" id="workDetails" rows="3" readonly>Tolong betulkan paip sinki saya tak boleh keluar air.
-            Dengan toilet duduk saya flush nye patah nak tukar baru
-                </textarea>
-        </div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-success">Approve</button>
-            <button type="button" class="btn btn-danger">Reject</button>
+    <div class="content">
+        <h2 class="mb-4">My Bookings</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Booking ID</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Customer Address</th>
+                    <th scope="col">Customer Phone Number</th>
+                    <th scope="col">Service Name</th>
+                    <th scope="col">Date of Service</th>
+                    <th scope="col">Detail of Work</th>
+                    <th scope="col">Booking Approval</th>
+                    <th scope="col">Booking Price</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="booking : ${bookingList}">
+                    <td th:text="${booking.bid}"></td>
+                    <td th:text="${booking.customer.customerfullname}"></td>
+                    <td th:text="${booking.customer.customeraddress}"></td>
+                    <td th:text="${booking.customer.customerphonenum}"></td>
+                    <td th:text="${booking.serviceProvider.service_name}"></td>
+                    <td th:text="${booking.bookingdate}"></td>
+                    <td th:text="${booking.bookingdesc}"></td>
+                    <td th:text="${booking.bookingstatus}"></td>
+                       <td th:text="${booking.bookingprice}"></td>
+                    <td>
+                        <a th:href="@{/accept(bookingid=${booking.bid} )}" class="btn btn-success">Accept</a>
+
+                        <form th:action="@{/serviceprovider/reject}" method="post" style="display:inline;">
+                            <form>
+                            <input type="hidden" name="bookingId" th:value="${booking.bid}"/>
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                    </td></tr>
+            </tbody>
+        </table>
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <span th:text="${errorMessage}"></span>
         </div>
     </div>
 
     <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>

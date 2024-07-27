@@ -9,30 +9,45 @@ public class Booking {
     private Date bookingdate;
     private String bookingdesc;
     private String bookingstatus;
-    private String spfullname;
-    private String spaddress;
-    private String spphone;
-    private String service_name;
-    private String customerfullname;
-    private String customeraddress;
+    private ServiceProvider serviceprovider;
+    private Customer customer;
+    private Double bookingprice;
+
 
     
 
-    public Booking(Integer bid, Date bookingdate, String bookingdesc, String bookingstatus, String customeraddress, String customerfullname, Integer id, String service_name, Integer sid, String spaddress, String spfullname, String spphone) {
+    public Booking(Integer bid, Integer id, Integer sid,  Date bookingdate, String bookingdesc, String bookingstatus) {
         this.bid = bid;
+        this.id = id;
+        this.sid = sid;
+        this.bookingdate = bookingdate;
+        this.bookingdesc = bookingdesc;
+        this.bookingstatus = bookingstatus;      
+    }
+
+    public Booking(Integer bid, Integer id, Integer sid, Date bookingdate, String bookingdesc, String bookingstatus, ServiceProvider serviceprovider) {
+        this.bid = bid;
+        this.id = id;
+        this.sid = sid;
         this.bookingdate = bookingdate;
         this.bookingdesc = bookingdesc;
         this.bookingstatus = bookingstatus;
-        this.customeraddress = customeraddress;
-        this.customerfullname = customerfullname;
-        this.id = id;
-        this.service_name = service_name;
-        this.sid = sid;
-        this.spaddress = spaddress;
-        this.spfullname = spfullname;
-        this.spphone = spphone;
+        this.serviceprovider = serviceprovider;
     }
 
+    public Booking(Integer bid, Integer id, Integer sid, Date bookingdate, String bookingdesc, String bookingstatus, ServiceProvider serviceprovider, Customer customer) {
+        this.bid = bid;
+        this.id = id;
+        this.sid = sid;
+        this.bookingdate = bookingdate;
+        this.bookingdesc = bookingdesc;
+        this.bookingstatus = bookingstatus;
+        this.serviceprovider = serviceprovider;
+        this.customer = customer;
+    }
+
+    public Booking() {
+    }
     
 
     public Integer getBid() {
@@ -83,56 +98,27 @@ public class Booking {
         this.bookingstatus = bookingstatus;
     }
 
-    public String getSpfullname() {
-        return spfullname;
+    public ServiceProvider getServiceProvider() {
+        return serviceprovider;
     }
 
-    public void setSpfullname(String spfullname) {
-        this.spfullname = spfullname;
+    public void setServiceProvider(ServiceProvider serviceProvider) {
+        this.serviceprovider = serviceProvider;
+    } 
+
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public String getSpaddress() {
-        return spaddress;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    } 
+
+    public Double getBookingprice() {
+        return bookingprice;
     }
 
-    public void setSpaddress(String spaddress) {
-        this.spaddress = spaddress;
-    }
-
-    public String getSpphone() {
-        return spphone;
-    }
-
-    public void setSpphone(String spphone) {
-        this.spphone = spphone;
-    }
-
-    public String getService_name() {
-        return service_name;
-    }
-
-    public void setService_name(String service_name) {
-        this.service_name = service_name;
-    }
-
-    public String getCustomerfullname() {
-        return customerfullname;
-    }
-
-    public void setCustomerfullname(String customerfullname) {
-        this.customerfullname = customerfullname;
-    }
-
-    public String getCustomeraddress() {
-        return customeraddress;
-    }
-
-    public void setCustomeraddress(String customeraddress) {
-        this.customeraddress = customeraddress;
-    }
-
-    
-    
-
-        
+    public void setBookingprice(double bookingprice) {
+        this.bookingprice = bookingprice;
+    }    
 }

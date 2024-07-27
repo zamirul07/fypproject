@@ -7,31 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.heroku.java.DAO.Customer.BookingStatusDAO;
 import com.heroku.java.Model.Booking;
 
 @Controller
-@RequestMapping("/bookingstatus")
 public class BookingStatusController {
 
-    private final BookingStatusDAO bookingStatusDAO;
-
     @Autowired
-    public BookingStatusController(BookingStatusDAO bookingStatusDAO) {
-        this.bookingStatusDAO = bookingStatusDAO;
-    }
+    private BookingStatusDAO bookingStatusDAO;
 
-    @GetMapping
-    public String bookingstatus(Model model) {
+
+    @GetMapping("/bookingstatus")
+    public String getBookingStatus(@RequestParam("bid") int bid, @RequestParam("sid") int sid, Model model) {
         try {
-            List<Booking> bookingList = bookingStatusDAO.bookingstatus();
+            System.out.println("bid get controller: "+ bid);
+            List<Booking> bookingList = bookingStatusDAO.getBookingByBookingId(bid);
             model.addAttribute("bookingList", bookingList);
         } catch (SQLException e) {
             e.printStackTrace();
-            return "error"; // Return an error page if needed
+            model.addAttribute("errorMessage", "Error fetching booking details.");
         }
-        return "customer/bookingstatus"; // Return the name of your booking status page
+        return "customer/bookingstatus";
     }
 }

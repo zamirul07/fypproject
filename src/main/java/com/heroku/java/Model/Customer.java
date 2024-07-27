@@ -30,6 +30,13 @@ public class Customer {
         this.password=password;
     }
 
+    public Customer(String customerfullname, String customeraddress, String customerphonenum){
+
+        this.customerfullname=customerfullname;  
+        this.customeraddress = customeraddress;
+        this.customerphonenum = customerphonenum;
+    }
+
     public int getId() {
         return id;
     }
