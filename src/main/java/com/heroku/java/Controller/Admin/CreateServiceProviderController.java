@@ -1,5 +1,6 @@
 package com.heroku.java.Controller.Admin;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.heroku.java.DAO.Admin.CreateServiceProviderDAO;
 import com.heroku.java.DAO.Admin.DeleteServiceProviderDAO;
@@ -43,9 +45,15 @@ public class CreateServiceProviderController {
     @PostMapping("/createsp")
     public String addServiceProvider(ServiceProvider serviceprovider) {
         try {
+            MultipartFile qrfile = serviceprovider.getQrcodemgs();
+            serviceprovider.setQrcodemg(qrfile.getBytes());
+
             createserviceproviderDAO.addServiceprovider(serviceprovider);
         } catch (SQLException e) {
             e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+            // return "redirect:/";
         }
         return "redirect:/adminviewsp";
     }

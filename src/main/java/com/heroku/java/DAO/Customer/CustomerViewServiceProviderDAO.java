@@ -36,7 +36,8 @@ public List<ServiceProvider> customerviewServiceProvider() throws SQLException{
                 String address = resultSet.getString("address");
                 String icnumber = resultSet.getString("icnumber");
                 String phonenumber = resultSet.getString("phonenumber");
-                String service_name = resultSet.getString("service_name");                
+                String service_name = resultSet.getString("service_name");     
+                           
                 
 
                 ServiceProvider serviceprovider = new ServiceProvider(sid, spfullname, email, password, address, icnumber, phonenumber, service_name);

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -26,7 +27,7 @@ public class BookingStatusDAO {
         List<Booking> bookings = new ArrayList<>();
         System.out.println("bid get: " + bid);
         
-        String sql = "SELECT b.bid, b.id, b.sid, b.bookingdate, b.bookingdesc, b.bookingstatus, " +
+        String sql = "SELECT b.bid, b.id, b.sid, b.bookingdate, b.bookingdesc, b.bookingstatus, b.bookingprice, sp.qrcode, " +
                      "sp.spfullname, sp.address, sp.phonenumber, sp.service_name " +
                      "FROM booking b " +
                      "JOIN serviceprovider sp ON b.sid = sp.sid " +
@@ -46,6 +47,8 @@ public class BookingStatusDAO {
                 booking.setBookingdate(resultSet.getDate("bookingdate"));
                 booking.setBookingdesc(resultSet.getString("bookingdesc"));
                 booking.setBookingstatus(resultSet.getString("bookingstatus"));
+                booking.setBookingprice(resultSet.getDouble("bookingprice"));
+                
                 
                 ServiceProvider serviceProvider = new ServiceProvider();
                 serviceProvider.setSpfullname(resultSet.getString("spfullname"));
@@ -53,6 +56,19 @@ public class BookingStatusDAO {
                 serviceProvider.setPhonenumber(resultSet.getString("phonenumber"));
                 serviceProvider.setService_name(resultSet.getString("service_name"));
                 
+                //
+                //  private byte[] qrcodemg;--=carimagebyte
+                // public MultipartFile qrcodemgs;--=carimage
+                // String qrcodemage;--=imgsrc
+
+                // byte[] carimageBytes = resultSet.getBytes("carimage");
+                // String base64Image = Base64.getEncoder().encodeToString(carimageBytes);
+                // String imageSrc = "data:image/jpeg;base64," + base64Image;
+                byte[] qrcodeBytes = resultSet.getBytes("qrcode");
+                String base64Image = Base64.getEncoder().encodeToString(qrcodeBytes);
+                String imageSrc = "data:image/jpeg;base64," + base64Image;
+                serviceProvider.setQrcodemage(imageSrc);
+
                 booking.setServiceProvider(serviceProvider);
                 bookings.add(booking);
             }
@@ -65,7 +81,7 @@ public class BookingStatusDAO {
 
     public List<Booking> getBookingsByCustomerId(int customerId) throws SQLException {
         List<Booking> bookings = new ArrayList<>();
-        String sql = "SELECT b.bid, b.id, b.sid, b.bookingdate, b.bookingdesc, b.bookingstatus, " +
+        String sql = "SELECT b.bid, b.id, b.sid, b.bookingdate, b.bookingdesc, b.bookingstatus, b.bookingprice, " +
                      "sp.spfullname, sp.address, sp.phonenumber, sp.service_name " +
                      "FROM booking b " +
                      "JOIN serviceprovider sp ON b.sid = sp.sid " +
@@ -85,6 +101,7 @@ public class BookingStatusDAO {
                 booking.setBookingdate(resultSet.getDate("bookingdate"));
                 booking.setBookingdesc(resultSet.getString("bookingdesc"));
                 booking.setBookingstatus(resultSet.getString("bookingstatus"));
+                booking.setBookingprice(resultSet.getDouble("bookingprice"));
 
                 ServiceProvider serviceProvider = new ServiceProvider();
                 serviceProvider.setSpfullname(resultSet.getString("spfullname"));
@@ -101,4 +118,17 @@ public class BookingStatusDAO {
 
         return bookings;
     }
+
+    public void deleteBookingById(int bookingId) throws SQLException {
+        String sql = "DELETE FROM booking WHERE bid = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, bookingId);
+            preparedStatement.executeUpdate();
+        }
+}
+
+
 }

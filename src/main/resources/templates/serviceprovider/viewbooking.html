@@ -48,7 +48,7 @@
                     <td>
                         <a th:href="@{/accept(bookingid=${booking.bid} )}" class="btn btn-success">Accept</a>
 
-                        <form th:action="@{/serviceprovider/reject}" method="post" style="display:inline;">
+                        <form th:action="@{/reject(bookingid=${booking.bid} )}" method="post" style="display:inline;">
                             <form>
                             <input type="hidden" name="bookingId" th:value="${booking.bid}"/>
                             <button type="submit" class="btn btn-danger">Reject</button>

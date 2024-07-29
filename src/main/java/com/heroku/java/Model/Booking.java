@@ -12,6 +12,7 @@ public class Booking {
     private ServiceProvider serviceprovider;
     private Customer customer;
     private Double bookingprice;
+   
 
 
     
@@ -22,7 +23,8 @@ public class Booking {
         this.sid = sid;
         this.bookingdate = bookingdate;
         this.bookingdesc = bookingdesc;
-        this.bookingstatus = bookingstatus;      
+        this.bookingstatus = bookingstatus;    
+        
     }
 
     public Booking(Integer bid, Integer id, Integer sid, Date bookingdate, String bookingdesc, String bookingstatus, ServiceProvider serviceprovider) {
@@ -44,6 +46,7 @@ public class Booking {
         this.bookingstatus = bookingstatus;
         this.serviceprovider = serviceprovider;
         this.customer = customer;
+
     }
 
     public Booking() {
@@ -120,5 +123,6 @@ public class Booking {
 
     public void setBookingprice(double bookingprice) {
         this.bookingprice = bookingprice;
-    }    
+    }   
+    
 }

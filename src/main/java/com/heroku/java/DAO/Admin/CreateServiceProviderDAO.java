@@ -22,7 +22,7 @@ public class CreateServiceProviderDAO {
     }
 
     public void addServiceprovider(ServiceProvider serviceProvider) throws SQLException {
-        String insertServiceProviderSql = "INSERT INTO serviceprovider (spfullname, email, password, address, icnumber, phonenumber, service_name) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String insertServiceProviderSql = "INSERT INTO serviceprovider (spfullname, email, password, address, icnumber, phonenumber, service_name, qrcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement insertStatement = connection.prepareStatement(insertServiceProviderSql)) {
     
@@ -33,7 +33,8 @@ public class CreateServiceProviderDAO {
             insertStatement.setString(5, serviceProvider.getIcnumber());
             insertStatement.setString(6, serviceProvider.getPhonenumber());
             insertStatement.setString(7, serviceProvider.getService_name());
-    
+            insertStatement.setBytes(8, serviceProvider.getQrcodemg());
+
             insertStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

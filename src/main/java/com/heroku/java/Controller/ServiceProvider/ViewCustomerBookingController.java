@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.heroku.java.DAO.ServiceProvider.ViewCustomerBoookingDAO;
 import com.heroku.java.Model.Booking;
@@ -60,6 +61,7 @@ public class ViewCustomerBookingController {
         }
         return "serviceprovider/confirmation"; // Ensure this matches the Thymeleaf template location
     }
+    
 
     @PostMapping("/serviceprovider/confirm")
     public String postMethodName(Model model, Booking booking, HttpSession session) {
@@ -76,6 +78,19 @@ public class ViewCustomerBookingController {
        
         return "redirect:/viewbooking";
     }
+    
+     @PostMapping("/reject")
+    public String rejectBooking(@RequestParam("bookingid") int bookingId, RedirectAttributes redirectAttributes) {
+        try {
+            viewCustomerBoookingDAO.deleteBookingById(bookingId);
+            redirectAttributes.addFlashAttribute("successMessage", "Booking successfully deleted.");
+        } catch (SQLException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete the booking.");
+            e.printStackTrace();
+        }
+        return "redirect:/viewbooking"; // Redirect to the booking list page
+    }
+
     
 
     

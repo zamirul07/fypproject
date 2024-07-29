@@ -33,24 +33,23 @@
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">Booking Details</h5>
-                        <p class="card-text"><strong>Service Provider Name:</strong> Aiman Bin Sharizal</p>
-                        <p class="card-text"><strong>Service Provider Address:</strong> No 9 Taman Maju</p>
-                        <p class="card-text"><strong>Service Provider Phone Number:</strong> 011-39029011</p>
-                        <p class="card-text"><strong>Type of Services:</strong> Plumbing</p>
-                        <p class="card-text"><strong>Date of Service:</strong> 2024-07-10</p>
-                        <p class="card-text"><strong>Detail of Work:</strong> Tolong betulkan paip sinki saya tak boleh keluar air.
-                            Dengan toilet duduk saya flush nye patah nak tukar baru</p>
+                        <p class="card-text"><strong>Service Provider Name:</strong> <span th:text="${booking.serviceProvider.spfullname}">Service Provider Name</span></p>
+                        <p class="card-text"><strong>Service Provider Address:</strong> <span th:text="${booking.serviceProvider.address}">Service Provider Address</span></p>
+                        <p class="card-text"><strong>Service Provider Phone Number:</strong> <span th:text="${booking.serviceProvider.phonenumber}">Service Provider Phone Number</span></p>
+                        <p class="card-text"><strong>Type of Services:</strong> <span th:text="${booking.serviceProvider.service_name}">Service Name</span></p>
+                        <p class="card-text"><strong>Date of Service:</strong> <span th:text="${#dates.format(booking.bookingdate, 'yyyy-MM-dd')}">Date of Service</span></p>
+                        <p class="card-text"><strong>Detail of Work:</strong> <span th:text="${booking.bookingdesc}">Booking Description</span></p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img th:src="@{/images/payment.png}" class="img-fluid rounded-start" alt="...">
+                    <img th:src="${booking.serviceProvider.qrcodemage}" alt="Payment Image" style="width: 300px; height: 200px;">
                 </div>
             </div>
         </div>
 
         <div class="mb-3">
             <label for="paymentMethod" class="form-label">Payment Method</label>
-            <select class="form-select" id="paymentMethod">
+            <select class="form-select" id="paymentMethod" name="paymentMethod">
                 <option selected>Select Payment Method</option>
                 <option value="cash">Cash</option>
                 <option value="qr">QR Code</option>
@@ -60,32 +59,21 @@
         <table class="table payment-table">
             <thead>
                 <tr>
-                    <th scope="col"></th>
                     <th scope="col">Amount</th>
                     <th scope="col">Description</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><input class="form-check-input" type="checkbox" id="serviceCharge" name="serviceCharge"></td>
-                    <td>$100</td>
-                    <td>Service Charge</td>
-                </tr>
-                <tr>
-                    <td><input class="form-check-input" type="checkbox" id="partsMaterials" name="partsMaterials"></td>
-                    <td>$50</td>
-                    <td>Parts and Materials</td>
-                </tr>
-                <tr>
-                    <td><input class="form-check-input" type="checkbox" id="miscFees" name="miscFees"></td>
-                    <td>$20</td>
-                    <td>Miscellaneous Fees</td>
+                    <td th:text="${booking.bookingprice}">Booking Price</td>
+                    <td th:text="${booking.bookingdesc}">Booking Description</td>
                 </tr>
             </tbody>
         </table>
 
         <button type="submit" class="btn btn-primary">Make Payment</button>
     </div>
+    <br><br>
 
     <!-- Bootstrap Bundle with Popper -->
     <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

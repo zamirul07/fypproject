@@ -31,4 +31,34 @@ public class BookingStatusController {
         }
         return "customer/bookingstatus";
     }
+
+    @GetMapping("/bookingdetails")
+    public String getBookingDetails(@RequestParam("bookingid") int bookingid, Model model) {
+        try {
+            List<Booking> bookings = bookingStatusDAO.getBookingByBookingId(bookingid);
+            if (bookings != null && !bookings.isEmpty()) {
+                model.addAttribute("booking", bookings.get(0));
+            } else {
+                model.addAttribute("error", "Booking not found");
+            }
+        } catch (SQLException e) {
+            model.addAttribute("error", "An error occurred while retrieving the booking details");
+        }
+        return "customer/bookingdetails";
+    }
+
+      @GetMapping("/payment")
+    public String getPaymentDetails(@RequestParam("bookingid") int bookingid, Model model) {
+        try {
+            List<Booking> bookings = bookingStatusDAO.getBookingByBookingId(bookingid);
+            if (bookings != null && !bookings.isEmpty()) {
+                model.addAttribute("booking", bookings.get(0));
+            } else {
+                model.addAttribute("errorMessage", "Booking not found");
+            }
+        } catch (SQLException e) {
+            model.addAttribute("errorMessage", "An error occurred while retrieving the booking details");
+        }
+        return "customer/payment";
+    }
 }

@@ -30,6 +30,8 @@
                     <th scope="col">Date of Service</th>
                     <th scope="col">Detail of Work</th>
                     <th scope="col">Booking Status</th>
+                    <!-- <th scope="col">Booking Price</th> -->
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +44,11 @@
                     <td th:text="${booking.bookingdate}"></td>
                     <td th:text="${booking.bookingdesc}"></td>
                     <td th:text="${booking.bookingstatus}"></td>
+                    <!-- <td th:text="${booking.bookingprice}"></td> -->
+                    <td>
+                        
+                        <a th:href="@{/bookingdetails(bookingid=${booking.bid} )}" class="btn btn-success">View Details</a>
+                    </td> 
                 </tr>
             </tbody>
         </table>

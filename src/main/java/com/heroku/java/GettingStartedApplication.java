@@ -49,11 +49,6 @@ public class GettingStartedApplication {
 
 
 
-
-    @GetMapping("customer/payment")
-    public String payment() {
-        return "customer/payment"; 
-    }
     
     @GetMapping("customer/paymenttrack")
     public String paymenttrack() {

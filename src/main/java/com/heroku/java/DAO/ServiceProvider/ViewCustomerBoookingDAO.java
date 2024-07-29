@@ -167,4 +167,15 @@ public class ViewCustomerBoookingDAO {
         }
     }
 
+    public void deleteBookingById(int bookingId) throws SQLException {
+        String sql = "DELETE FROM booking WHERE bid = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, bookingId);
+            preparedStatement.executeUpdate();
+        }
+    }
+
 }

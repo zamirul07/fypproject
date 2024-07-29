@@ -64,7 +64,7 @@
             <!-- Form section -->
             <div class="container-fluid" style="background-color:#dfdfdf;">
               <div class="container-fluid card col-12 mt-4" style="background-color:#dfdfdf;">
-                <form style="margin: 20px 40px 43px 40px;" class="p-3" method="post" th:action="@{/createsp}" th:object="${serviceProvider}">
+                <form style="margin: 20px 40px 43px 40px;" class="p-3" method="post" th:action="@{/createsp}" th:object="${serviceProvider}" enctype="multipart/form-data">
                   <div class="row mt-3">
                     <div class="col-md-4">
                       <label for="spfullname" class="form-label fw-semibold">Full Name</label>
@@ -108,7 +108,12 @@
                         </th:block>
                       </select>
                     </div>
-                  </div>
+                  </div><br>
+                  <div class="form-group">
+                    <label for="qrcode">QR Code</label>
+                    <input type="file" class="form-control" id="qrcode" name="qrcodemgs"  required>
+                </div>
+                
                   <div class="button-container mt-4 text-center">
                     <button type="submit" class="btn btn-primary col-4">Create</button>
                   </div>

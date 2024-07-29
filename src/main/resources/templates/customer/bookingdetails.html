@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragments/customerlayout :: customerlayout (~{::body},'listbooking')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Booking Details</title>
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <style>
+        .content {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff; /* Light background */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Booking Details section -->
+    <div class="container mt-5 pt-5">
+        <h2 class="mb-4 text-center">Booking Details</h2>
+        <div class="card content">
+            <div class="card-body">
+                <form>
+                    <input type="text" name = "bid" th:value = "${booking.bid}"  >
+                    <div class="form-group row">
+                        <label for="serviceProvider" class="col-sm-3 col-form-label">Service Provider</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="serviceProvider" th:value="${booking.serviceProvider.spfullname}" placeholder="Service Provider Full Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="bookingDate" class="col-sm-3 col-form-label">Booking Date</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="bookingDate" th:value="${#dates.format(booking.bookingdate, 'yyyy-MM-dd')}" placeholder="Booking Date">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="bookingDesc" class="col-sm-3 col-form-label">Description</label>
+                        <div class="col-sm-9">
+                            <textarea readonly class="form-control-plaintext" id="bookingDesc" rows="3" placeholder="Booking Description" th:text="${booking.bookingdesc}"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="bookingPrice" class="col-sm-3 col-form-label">Price</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="bookingPrice" th:value="${booking.bookingprice}" placeholder="Booking Price">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12 text-center">
+                            <a th:href="@{/payment(bookingid=${booking.bid})}" class="btn btn-primary" th:classappend="${booking.bookingprice == 0} ? 'disabled' : ''">Make payment</a>
+                            <a th:href="@{/deleteBooking(bookingId=${booking.bid} )}"  class="btn btn-danger" style="display:inline;"> Cancel Booking</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-3 bg-dark text-white">
+        <div class="container-fluid">
+            <p class="m-0 text-center">Copyright &copy; 2024 <a href="#">HOME RENOVATION AND REPAIRING SERVICES</a></p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    </script>
+</body>
+</html>
