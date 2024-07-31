@@ -42,41 +42,110 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img th:src="${booking.serviceProvider.qrcodemage}" alt="Payment Image" style="width: 300px; height: 200px;">
+                    <img id="qrCodeImage" th:src="${booking.serviceProvider.qrcodemage}" alt="Payment Image" style="width: 300px; height: 200px; display: none;">
                 </div>
             </div>
         </div>
+        
+        <!-- <form action="/UploadPaymentProof" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="bookingId" th:value="${booking.bid}">
+            <div class="mb-3">
+                <label for="paymentMethod" class="form-label">Payment Method</label>
+                <select class="form-select" id="paymentMethod" name="paymentMethod" required>
+                    <option value="" selected>Select Payment Method</option>
+                    <option value="cash">Cash</option>
+                    <option value="qr">QR Code</option>
+                </select>
+            </div>
 
-        <div class="mb-3">
-            <label for="paymentMethod" class="form-label">Payment Method</label>
-            <select class="form-select" id="paymentMethod" name="paymentMethod">
-                <option selected>Select Payment Method</option>
-                <option value="cash">Cash</option>
-                <option value="qr">QR Code</option>
-            </select>
-        </div>
+            <div class="mb-3" id="uploadProof" style="display: none;">
+                <label for="paymentproofs" class="form-label">Upload Payment Proof</label>
+                <input class="form-control" type="file" id="paymentproofs" name="paymentproofs" required>
+            </div>
 
-        <table class="table payment-table">
-            <thead>
-                <tr>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td th:text="${booking.bookingprice}">Booking Price</td>
-                    <td th:text="${booking.bookingdesc}">Booking Description</td>
-                </tr>
-            </tbody>
-        </table>
+            <table class="table payment-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${booking.bookingprice}">Booking Price</td>
+                        <td th:text="${booking.bookingdesc}">Booking Description</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <button type="submit" class="btn btn-primary">Make Payment</button>
+            <button type="submit" id="makePaymentButton" class="btn btn-primary" disabled>Make Payment</button>
+        </form> -->
+        <form action="/UploadPaymentProof" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="bid" th:value="${booking.bid}">
+            <div class="mb-3">
+                <label for="paymentMethod" class="form-label">Payment Method</label>
+                <select class="form-select" id="paymentMethod" name="paymentMethod" required>
+                    <option value="" selected>Select Payment Method</option>
+                    <option value="cash">Cash</option>
+                    <option value="qr">QR Code</option>
+                </select>
+            </div>
+        
+            <div class="mb-3" id="uploadProof" style="display: none;">
+                <label for="paymentproofs" class="form-label">Upload Payment Proof</label>
+                <input class="form-control" type="file" id="paymentproofs" name="ppimage" required>
+            </div>
+        
+            <table class="table payment-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${booking.bookingprice}">Booking Price</td>
+                        <td th:text="${booking.bookingdesc}">Booking Description</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <button type="submit" id="makePaymentButton" class="btn btn-primary" disabled>Make Payment</button>
+        </form>
+        
+        
+        <!-- New button to navigate to payment track -->
+        <form action="/paymenttrack" method="get" style="margin-top: 20px;">
+            <input type="hidden" name="bid" th:value="${booking.bid}">
+            <button type="submit" class="btn btn-secondary">Track Payment</button>
+        </form>
     </div>
     <br><br>
 
     <!-- Bootstrap Bundle with Popper -->
     <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            var qrCodeImage = document.getElementById('qrCodeImage');
+            var uploadProof = document.getElementById('uploadProof');
+            var makePaymentButton = document.getElementById('makePaymentButton');
+
+            if (this.value === 'qr') {
+                qrCodeImage.style.display = 'block';
+                uploadProof.style.display = 'block';
+                makePaymentButton.disabled = false;
+            } else if (this.value === 'cash') {
+                qrCodeImage.style.display = 'none';
+                uploadProof.style.display = 'none';
+                makePaymentButton.disabled = false;
+            } else {
+                qrCodeImage.style.display = 'none';
+                uploadProof.style.display = 'none';
+                makePaymentButton.disabled = true;
+            }
+        });
+    </script>
 </body>
 </html>

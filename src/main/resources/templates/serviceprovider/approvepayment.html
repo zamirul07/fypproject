@@ -34,64 +34,40 @@
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">Booking Details</h5>
-                        <p class="card-text"><strong>Service Provider Name:</strong> Aiman Bin Sharizal</p>
-                        <p class="card-text"><strong>Service Provider Address:</strong> No 9 Taman Maju</p>
-                        <p class="card-text"><strong>Service Provider Phone Number:</strong> 011-39029011</p>
-                        <p class="card-text"><strong>Type of Services:</strong> Plumbing</p>
-                        <p class="card-text"><strong>Date of Service:</strong> 2024-07-10</p>
-                        <p class="card-text"><strong>Detail of Work:</strong> Tolong betulkan paip sinki saya tak boleh keluar air.
-                            Dengan toilet duduk saya flush nye patah nak tukar baru</p>
+                        <p class="card-text"><strong>Service Provider Name:</strong> <span th:text="${booking.serviceProvider.spfullname}">Service Provider Name</span></p>
+                        <p class="card-text"><strong>Service Provider Address:</strong> <span th:text="${booking.serviceProvider.address}">Service Provider Address</span></p>
+                        <p class="card-text"><strong>Service Provider Phone Number:</strong> <span th:text="${booking.serviceProvider.phonenumber}">Service Provider Phone Number</span></p>
+                        <p class="card-text"><strong>Type of Services:</strong> <span th:text="${booking.serviceProvider.service_name}">Service Name</span></p>
+                        <p class="card-text"><strong>Date of Service:</strong> <span th:text="${#dates.format(booking.bookingdate, 'yyyy-MM-dd')}">Date of Service</span></p>
+                        <p class="card-text"><strong>Detail of Work:</strong> <span th:text="${booking.workdetails}">Work Details</span></p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img th:src="@{/images/payment.png}" class="img-fluid rounded-start" alt="...">
+                    <img th:src="${booking.paymentproofmage}" class="img-fluid rounded-start" alt="Payment Image" style="width: 300px; height: 200px;">
                 </div>
             </div>
         </div>
-
-        <!-- <div class="container-fluid card col-7 mt-4" style="background-color:#dfdfdf;">
-            <label for="paymentMethod" class="form-label">Payment Method</label>
-            <select class="form-select" id="paymentMethod">
-                <option selected>Select Payment Method</option>
-                <option value="cash">Cash</option>
-                <option value="qr">QR Code</option>
-            </select>
-        </div> -->
-        <!-- <div class="container-fluid card col-7 mt-4" style="background-color:#dfdfdf;"> -->
         <table class="table payment-table">
             <thead>
                 <tr>
-                    <th scope="col"></th>
                     <th scope="col">Amount</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><input class="form-check-input" type="checkbox" id="serviceCharge" name="serviceCharge"></td>
-                    <td>$100</td>
-                    <td>Service Charge</td>
-                    <td><button type="submit" class="btn btn-primary">Approve Payment</button><button type="submit" class="btn btn-danger">Reject Payment</button></td>
+                    <td th:text="${booking.bookingprice}"></td>
+                    <td th:text="${booking.paymentstatus}"></td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Approve Payment</button>
+                        <button type="submit" class="btn btn-danger">Reject Payment</button>
+                    </td>
                 </tr>
-                <tr>
-                    <td><input class="form-check-input" type="checkbox" id="partsMaterials" name="partsMaterials"></td>
-                    <td>$50</td>
-                    <td>Parts and Materials</td>
-                    <td><button type="submit" class="btn btn-primary">Approve Payment</button><button type="submit" class="btn btn-danger">Reject Payment</button></td>
-                </tr>
-                <tr>
-                    <td><input class="form-check-input" type="checkbox" id="miscFees" name="miscFees"></td>
-                    <td>$20</td>
-                    <td>Miscellaneous Fees</td>
-                    <td>Not paid yet</td>
-                    <!-- <td><button type="submit" class="btn btn-primary">Approve Payment</button><button type="submit" class="btn btn-danger">Reject Payment</button></td> -->
-                </tr>
-            
             </tbody>
         </table>
 
-        <!-- <button type="submit" class="btn btn-primary">Make Payment</button> -->
+        
     </div>
 
     <!-- Bootstrap Bundle with Popper -->

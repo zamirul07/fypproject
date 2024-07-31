@@ -50,14 +50,14 @@ public class GettingStartedApplication {
 
 
     
-    @GetMapping("customer/paymenttrack")
-    public String paymenttrack() {
-        return "customer/paymenttrack"; 
+
+
+    @GetMapping("/viewpayment")
+    public String viewpayment() {
+        return "serviceprovider/viewpayment"; 
     }
 
-   
-
-    @GetMapping("serviceprovider/approvepayment")
+    @GetMapping("/approvepayment")
     public String approvepayment() {
         return "serviceprovider/approvepayment"; 
     }

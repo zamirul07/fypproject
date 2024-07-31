@@ -23,61 +23,6 @@ public class BookingStatusDAO {
         this.dataSource = dataSource;
     }
 
-    public List<Booking> getBookingByBookingId(int bid) throws SQLException {
-        List<Booking> bookings = new ArrayList<>();
-        System.out.println("bid get: " + bid);
-        
-        String sql = "SELECT b.bid, b.id, b.sid, b.bookingdate, b.bookingdesc, b.bookingstatus, b.bookingprice, sp.qrcode, " +
-                     "sp.spfullname, sp.address, sp.phonenumber, sp.service_name " +
-                     "FROM booking b " +
-                     "JOIN serviceprovider sp ON b.sid = sp.sid " +
-                     "WHERE b.bid = ?";
-        
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            
-            statement.setInt(1, bid);
-            ResultSet resultSet = statement.executeQuery();
-            
-            while (resultSet.next()) {
-                Booking booking = new Booking();
-                booking.setBid(resultSet.getInt("bid"));
-                booking.setId(resultSet.getInt("id"));
-                booking.setSid(resultSet.getInt("sid"));
-                booking.setBookingdate(resultSet.getDate("bookingdate"));
-                booking.setBookingdesc(resultSet.getString("bookingdesc"));
-                booking.setBookingstatus(resultSet.getString("bookingstatus"));
-                booking.setBookingprice(resultSet.getDouble("bookingprice"));
-                
-                
-                ServiceProvider serviceProvider = new ServiceProvider();
-                serviceProvider.setSpfullname(resultSet.getString("spfullname"));
-                serviceProvider.setAddress(resultSet.getString("address"));
-                serviceProvider.setPhonenumber(resultSet.getString("phonenumber"));
-                serviceProvider.setService_name(resultSet.getString("service_name"));
-                
-                //
-                //  private byte[] qrcodemg;--=carimagebyte
-                // public MultipartFile qrcodemgs;--=carimage
-                // String qrcodemage;--=imgsrc
-
-                // byte[] carimageBytes = resultSet.getBytes("carimage");
-                // String base64Image = Base64.getEncoder().encodeToString(carimageBytes);
-                // String imageSrc = "data:image/jpeg;base64," + base64Image;
-                byte[] qrcodeBytes = resultSet.getBytes("qrcode");
-                String base64Image = Base64.getEncoder().encodeToString(qrcodeBytes);
-                String imageSrc = "data:image/jpeg;base64," + base64Image;
-                serviceProvider.setQrcodemage(imageSrc);
-
-                booking.setServiceProvider(serviceProvider);
-                bookings.add(booking);
-            }
-        } catch (SQLException e) {
-            throw new SQLException("Error fetching bookings by booking ID: " + bid, e);
-        }
-        
-        return bookings;
-    }
 
     public List<Booking> getBookingsByCustomerId(int customerId) throws SQLException {
         List<Booking> bookings = new ArrayList<>();
@@ -130,5 +75,53 @@ public class BookingStatusDAO {
         }
 }
 
+public List<Booking> getBookingByBookingId(int bid) throws SQLException {
+        List<Booking> bookings = new ArrayList<>();
+        System.out.println("bid get: " + bid);
+        
+        String sql = "SELECT b.bid, b.id, b.sid, b.bookingdate, b.bookingdesc, b.bookingstatus, b.bookingprice,  sp.qrcode, " +
+                     "sp.spfullname, sp.address, sp.phonenumber, sp.service_name " +
+                     "FROM booking b " +
+                     "JOIN serviceprovider sp ON b.sid = sp.sid " +
+                     "WHERE b.bid = ?";
+        
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            
+            statement.setInt(1, bid);
+            ResultSet resultSet = statement.executeQuery();
+            
+            while (resultSet.next()) {
+                Booking booking = new Booking();
+                booking.setBid(resultSet.getInt("bid"));
+                booking.setId(resultSet.getInt("id"));
+                booking.setSid(resultSet.getInt("sid"));
+                booking.setBookingdate(resultSet.getDate("bookingdate"));
+                booking.setBookingdesc(resultSet.getString("bookingdesc"));
+                booking.setBookingstatus(resultSet.getString("bookingstatus"));
+                booking.setBookingprice(resultSet.getDouble("bookingprice"));
+                
+                
+                
+                ServiceProvider serviceProvider = new ServiceProvider();
+                serviceProvider.setSpfullname(resultSet.getString("spfullname"));
+                serviceProvider.setAddress(resultSet.getString("address"));
+                serviceProvider.setPhonenumber(resultSet.getString("phonenumber"));
+                serviceProvider.setService_name(resultSet.getString("service_name"));
+               
+                byte[] qrcodeBytes = resultSet.getBytes("qrcode");
+                String base64Image = Base64.getEncoder().encodeToString(qrcodeBytes);
+                String imageSrc = "data:image/jpeg;base64," + base64Image;
+                serviceProvider.setQrcodemage(imageSrc);
+
+                booking.setServiceProvider(serviceProvider);
+                bookings.add(booking);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching bookings by booking ID: " + bid, e);
+        }
+        
+        return bookings;
+    }
 
 }

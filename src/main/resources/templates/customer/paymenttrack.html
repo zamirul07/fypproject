@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/customerlayout :: customerlayout (~{::body},'services')}">
+<html lang="en" th:replace="~{fragments/customerlayout :: customerlayout (~{::body},'paymenttrack')}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Payment Page</title>
+    <title>Payment Tracking</title>
     <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <style>
         .container {
@@ -24,56 +24,45 @@
 <body>
     <div class="container">
         <h1>Payment Tracking</h1>
-
+    
         <div class="card">
             <div class="row g-0">
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">Booking Details</h5>
-                        <p class="card-text"><strong>Service Provider Name:</strong> Aiman Bin Sharizal</p>
-                        <p class="card-text"><strong>Service Provider Address:</strong> No 9 Taman Maju</p>
-                        <p class="card-text"><strong>Service Provider Phone Number:</strong> 011-39029011</p>
-                        <p class="card-text"><strong>Type of Services:</strong> Plumbing</p>
-                        <p class="card-text"><strong>Date of Service:</strong> 2024-07-10</p>
-                        <p class="card-text"><strong>Detail of Work:</strong> Tolong betulkan paip sinki saya tak boleh keluar air.
-                            Dengan toilet duduk saya flush nye patah nak tukar baru</p>
+                        <h5 class="card-title">Payment Status</h5>
+                        <p class="card-text"><strong>Booking ID:</strong> <span th:text="${booking.bid}">Booking ID</span></p>
+                        <p class="card-text"><strong>Service Provider Name:</strong> <span th:text="${booking.serviceProvider.spfullname}">Service Provider Name</span></p>
+                        <p class="card-text"><strong>Service Provider Address:</strong> <span th:text="${booking.serviceProvider.address}">Service Provider Address</span></p>
+                        <p class="card-text"><strong>Service Provider Phone Number:</strong> <span th:text="${booking.serviceProvider.phonenumber}">Service Provider Phone Number</span></p>
+                        <p class="card-text"><strong>Type of Services:</strong> <span th:text="${booking.serviceProvider.service_name}">Service Name</span></p>
+                        <p class="card-text"><strong>Date of Service:</strong> <span th:text="${#dates.format(booking.bookingdate, 'yyyy-MM-dd')}">Date of Service</span></p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img th:src="@{/images/payment.png}" class="img-fluid rounded-start" alt="...">
+                    <img id="paymentproof" th:src="'data:image/jpeg;base64,' + ${booking.base64Image}" alt="Payment Image" style="width: 300px; height: 200px;" th:if="${booking.base64Image != null}">
                 </div>
             </div>
         </div>
-
+    
         <table class="table payment-table">
             <thead>
                 <tr>
                     <th scope="col">Amount</th>
-                    <th scope="col">Description</th>
                     <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>$100</td>
-                    <td>Service Charge</td>
-                    <td><span class="badge bg-success">Completed</span></td>
-                </tr>
-                <tr>
-                    <td>$50</td>
-                    <td>Parts and Materials</td>
-                    <td><span class="badge bg-success">Completed</span></td>
-                </tr>
-                <tr>
-                    <td>$20</td>
-                    <td>Miscellaneous Fees</td>
-                    <td><span class="badge bg-warning">Not Done Yet</span></td>
+                    <td th:text="${booking.bookingprice}"></td>
+                    <td th:text="${booking.paymentstatus}"></td>
                 </tr>
             </tbody>
         </table>
+        <input type="hidden" name="bid" th:value="${booking.bid}">
     </div>
-
+    
     <!-- Bootstrap Bundle with Popper -->
     <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
+</html>
