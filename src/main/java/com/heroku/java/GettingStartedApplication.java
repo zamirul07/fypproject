@@ -24,12 +24,7 @@ public class GettingStartedApplication {
 
     @GetMapping("/")
     public String homepage() {
-        return "/homepage";
-    }
-
-    @GetMapping("/homepage")
-    public String homepagel() {
-        return "/homepage";
+        return "homepage";
     }
    
     @GetMapping("/homecust")
