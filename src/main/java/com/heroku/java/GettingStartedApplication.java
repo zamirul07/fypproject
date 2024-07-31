@@ -23,14 +23,14 @@ public class GettingStartedApplication {
     }
 
     @GetMapping("/")
-    public String index() {
-        return "index";
-    }
-
-    @GetMapping("/homepage")
     public String homepage() {
         return "/homepage";
     }
+
+    // @GetMapping("/homepage")
+    // public String homepage() {
+    //     return "/homepage";
+    // }
    
     @GetMapping("/homecust")
     public String homecust() {
