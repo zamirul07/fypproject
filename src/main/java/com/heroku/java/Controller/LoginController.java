@@ -78,17 +78,15 @@ public class LoginController {
                 return "redirect:/homesp"; // Replace with the appropriate sp home page URL
             }
             
-            
             else {
                 System.out.println("Invalid username or password");
                 model.addAttribute("error", true);
-                return "login";
             }
         } catch (SQLException e) {
             e.printStackTrace();
             model.addAttribute("error", true);
-            return "login";
         }
+        return "login";
     }
 
     @GetMapping("/logout")
