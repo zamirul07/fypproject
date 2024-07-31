@@ -27,11 +27,6 @@ public class GettingStartedApplication {
         return "/homepage";
     }
 
-    // @GetMapping("/homepage")
-    // public String homepage() {
-    //     return "/homepage";
-    // }
-   
     @GetMapping("/homecust")
     public String homecust() {
         return "customer/homecust"; 
