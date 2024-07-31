@@ -81,12 +81,13 @@ public class LoginController {
             else {
                 System.out.println("Invalid username or password");
                 model.addAttribute("error", true);
+                return "login";
             }
         } catch (SQLException e) {
             e.printStackTrace();
             model.addAttribute("error", true);
+            return "login";
         }
-        return "login";
     }
 
     @GetMapping("/logout")
