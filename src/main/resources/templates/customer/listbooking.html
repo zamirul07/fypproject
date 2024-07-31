@@ -48,7 +48,13 @@
                     <td>
                         
                         <a th:href="@{/bookingdetails(bookingid=${booking.bid} )}" class="btn btn-success">View Details</a>
+                        <form action="/paymenttrack" method="get" style="margin-top: 20px;">
+                            <input type="hidden" name="bid" th:value="${booking.bid}">
+                            <button type="submit" class="btn btn-secondary">Track Payment</button>
+                        </form>
                     </td> 
+                    <!-- New button to navigate to payment track -->
+        
                 </tr>
             </tbody>
         </table>
