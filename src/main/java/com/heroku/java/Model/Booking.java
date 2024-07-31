@@ -19,9 +19,15 @@ public class Booking {
     public MultipartFile ppimage;
     String imageSrc;
     private String paymentstatus;
+    private String custName;
 
-
-    
+    public Booking(Integer bid, String custName, Date bookingdate, Double bookingprice,String paymentstatus){
+        this.bid=bid;
+        this.custName=custName;
+        this.bookingdate=bookingdate;
+        this.bookingprice=bookingprice;
+        this.paymentstatus=paymentstatus;
+    }
 
     public Booking(Integer bid, Integer id, Integer sid,  Date bookingdate, String bookingdesc, String bookingstatus) {
         this.bid = bid;
@@ -55,6 +61,16 @@ public class Booking {
     public Booking() {
     }
     
+    public Booking(int bid, String custName, Date bookingdate, double bookingprice, String paymentstatus, int id) {
+
+        this.bid = bid;
+        this.custName=custName;
+        this.bookingdate=bookingdate;
+        this.bookingprice=bookingprice;
+        this.paymentstatus=paymentstatus;
+        this.id = id;        
+    }
+
     public String getBase64Image() {
         if (this.ppbyte != null) {
             return Base64.getEncoder().encodeToString(this.ppbyte);
@@ -100,6 +116,14 @@ public class Booking {
 
     public void setBookingdesc(String bookingdesc) {
         this.bookingdesc = bookingdesc;
+    }
+
+    public String getCustName() {
+        return custName;
+    }
+
+    public void setCustName(String custName) {
+        this.custName = custName;
     }
 
     public String getBookingstatus() {

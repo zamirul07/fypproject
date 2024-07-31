@@ -1,77 +1,142 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/serviceproviderlayout :: serviceproviderlayout (~{::body},'approvepayment')}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html
+  lang="en"
+  th:replace="~{fragments/serviceproviderlayout :: serviceproviderlayout (~{::body},'approvepayment')}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Payment Page</title>
-    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link
+      th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
     <style>
-        .container {
-            margin-top: 20px;
-            margin-bottom: 250px;
-            max-width: 900px;
-        }
-        .card {
-            margin-bottom: 20px;
-        }
-        .card-body {
-            padding: 20px;
-        }
-        .payment-table {
-            margin-top: 20px;
-        }
-        .form-select {
-            margin-bottom: 20px;
-        }
+      .container {
+        margin-top: 20px;
+        margin-bottom: 250px;
+        max-width: 900px;
+      }
+      .card {
+        margin-bottom: 20px;
+      }
+      .card-body {
+        padding: 20px;
+      }
+      .payment-table {
+        margin-top: 20px;
+      }
+      .form-select {
+        margin-bottom: 20px;
+      }
     </style>
-</head>
-<body>
-    <div class="container-fluid card col-7 mt-4 mb-6" style="background-color:#dfdfdf; margin-bottom: 10%;">
-        <h1>Payment Details</h1>
-
-        <div class="container-fluid card col-7 mt-4 mb-6" style="background-color:#dfdfdf;">
-            <div class="row g-0">
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Booking Details</h5>
-                        <p class="card-text"><strong>Service Provider Name:</strong> <span th:text="${booking.serviceProvider.spfullname}">Service Provider Name</span></p>
-                        <p class="card-text"><strong>Service Provider Address:</strong> <span th:text="${booking.serviceProvider.address}">Service Provider Address</span></p>
-                        <p class="card-text"><strong>Service Provider Phone Number:</strong> <span th:text="${booking.serviceProvider.phonenumber}">Service Provider Phone Number</span></p>
-                        <p class="card-text"><strong>Type of Services:</strong> <span th:text="${booking.serviceProvider.service_name}">Service Name</span></p>
-                        <p class="card-text"><strong>Date of Service:</strong> <span th:text="${#dates.format(booking.bookingdate, 'yyyy-MM-dd')}">Date of Service</span></p>
-                        <p class="card-text"><strong>Detail of Work:</strong> <span th:text="${booking.workdetails}">Work Details</span></p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <img th:src="${booking.paymentproofmage}" class="img-fluid rounded-start" alt="Payment Image" style="width: 300px; height: 200px;">
-                </div>
-            </div>
+  </head>
+  <body>
+    <div
+      class="container-fluid card col-7 mt-4 mb-6"
+      style="background-color: #dfdfdf"
+    >
+      <div class="row g-0">
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">Booking Details</h5>
+            <p class="card-text">
+              <strong>Customer Name:</strong>
+              <span th:text="${booking.customer.customerfullname}"
+                >Customer Name</span
+              >
+            </p>
+            <p class="card-text">
+              <strong>Customer Address:</strong>
+              <span th:text="${booking.customer.customeraddress}"
+                >Customer Address</span
+              >
+            </p>
+            <p class="card-text">
+              <strong>Customer Phone Number:</strong>
+              <span th:text="${booking.customer.customerphonenum}"
+                >Customer Phone Number</span
+              >
+            </p>
+            <p class="card-text">
+              <strong>Type of Services:</strong>
+              <span th:text="${booking.serviceProvider.service_name}"
+                >Service Name</span
+              >
+            </p>
+            <p class="card-text">
+              <strong>Date of Service:</strong>
+              <span
+                th:text="${#dates.format(booking.bookingdate, 'yyyy-MM-dd')}"
+                >Date of Service</span
+              >
+            </p>
+            <p class="card-text">
+              <strong>Detail of Work:</strong>
+              <span th:text="${booking.bookingdesc}">Work Details</span>
+            </p>
+            <p class="card-text">
+              <strong>Booking Price:</strong>
+              <span th:text="${booking.bookingprice}">Booking Price</span>
+            </p>
+            <p class="card-text">
+              <strong>Payment Status:</strong>
+              <span th:text="${booking.paymentstatus}">Payment Status</span>
+            </p>
+          </div>
         </div>
-        <table class="table payment-table">
-            <thead>
+        <div class="col-md-4">
+          <img
+            id="paymentproof"
+            th:src="'data:image/jpeg;base64,' + ${booking.base64Image}"
+            alt="Payment Image"
+            style="width: 300px; height: 200px"
+            th:if="${booking.base64Image != null}"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="content">
+        <h2 class="mb-4">Customer Payment</h2>
+        <form th:action="@{/approvePayment}" method="post">
+            <input type="hidden" name="bid" th:value="${booking.bid}"/>
+            <input type="hidden" name="id" th:value="${booking.id}"/>
+            <input type="hidden" name="sid" th:value="${booking.sid}"/>
+            <table class="table table-bordered">
+                <thead>
                 <tr>
                     <th scope="col">Amount</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr>
                     <td th:text="${booking.bookingprice}"></td>
                     <td th:text="${booking.paymentstatus}"></td>
                     <td>
-                        <button type="submit" class="btn btn-primary">Approve Payment</button>
-                        <button type="submit" class="btn btn-danger">Reject Payment</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="approve">Approve Payment</button>
+                        <button type="submit" class="btn btn-danger" name="action" value="reject">Reject Payment</button>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-
-        
+                </tbody>
+            </table>
+        </form>
     </div>
+    <br /><br />
 
     <!-- Bootstrap Bundle with Popper -->
-    <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-</body>
+    <script
+      th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

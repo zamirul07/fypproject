@@ -52,15 +52,9 @@ public class GettingStartedApplication {
     
 
 
-    @GetMapping("/viewpayment")
-    public String viewpayment() {
-        return "serviceprovider/viewpayment"; 
-    }
+    
 
-    @GetMapping("/approvepayment")
-    public String approvepayment() {
-        return "serviceprovider/approvepayment"; 
-    }
+    
 
 
     @GetMapping("/database")

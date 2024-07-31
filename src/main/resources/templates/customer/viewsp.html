@@ -33,6 +33,7 @@
                     <th scope="col">Ic Number</th>
                     <th scope="col">Phone Number</th>
                     <th scope="col">Services</th>
+                    <th scope="col">Rating</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -44,6 +45,7 @@
                     <td th:text="${serviceprovider.icnumber}"></td>
                     <td th:text="${serviceprovider.phonenumber}"></td>
                     <td th:text="${serviceprovider.service_name}"></td>
+                    <td th:text="${serviceprovider.average_rating}"></td>
                     <td>
                         <div class="d-flex">
                             <form th:action="@{/booking}" method="get">

@@ -36,48 +36,6 @@ public class PaymentProofDAO {
         }
     }
 
-    // public Booking getBookingDetails(int bid) throws SQLException {
-    //     Booking booking = null;
-    
-    //     String sql = "SELECT b.bid, b.id, b.sid, b.bookingdate, b.bookingdesc, b.bookingstatus, b.bookingprice, b.ppimage, sp.qrcode, " +
-    //                  "sp.spfullname, sp.address, sp.phonenumber, sp.service_name, b.paymentstatus " +
-    //                  "FROM booking b " +
-    //                  "JOIN serviceprovider sp ON b.sid = sp.sid " +
-    //                  "WHERE b.bid = ?";
-        
-    //     try (Connection connection = dataSource.getConnection();
-    //          PreparedStatement statement = connection.prepareStatement(sql)) {
-            
-    //         statement.setInt(1, bid);
-    //         ResultSet resultSet = statement.executeQuery();
-
-    //         if (resultSet.next()) {
-    //             booking = new Booking();
-    //             booking.setBid(resultSet.getInt("bid"));
-    //             booking.setId(resultSet.getInt("id"));
-    //             booking.setSid(resultSet.getInt("sid"));
-    //             booking.setBookingdate(resultSet.getDate("bookingdate"));
-    //             booking.setBookingdesc(resultSet.getString("bookingdesc"));
-    //             booking.setBookingstatus(resultSet.getString("bookingstatus"));
-    //             booking.setBookingprice(resultSet.getDouble("bookingprice"));
-    //             booking.setPaymentstatus(resultSet.getString("paymentstatus"));
-    //             booking.setPpbyte(resultSet.getBytes("ppimage")); // Set the byte array
-    
-    //             ServiceProvider serviceProvider = new ServiceProvider();
-    //             serviceProvider.setSpfullname(resultSet.getString("spfullname"));
-    //             serviceProvider.setAddress(resultSet.getString("address"));
-    //             serviceProvider.setPhonenumber(resultSet.getString("phonenumber"));
-    //             serviceProvider.setService_name(resultSet.getString("service_name"));
-    
-    //             booking.setServiceProvider(serviceProvider);
-    //         }
-    //     } catch (SQLException e) {
-    //         throw new SQLException("Error fetching booking details by booking ID: " + bid, e);
-    //     }
-        
-    //     return booking;
-    // }
-
     public Booking getBookingDetails(int bid) throws SQLException {
         Booking booking = null;
     

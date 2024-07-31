@@ -58,8 +58,25 @@
                 </tr>
             </tbody>
         </table>
+        <div class="rating-div" th:if="${booking.paymentstatus == 'Paid'}">
+            <h3>Rate Your Experience</h3>
+            <form th:action="@{/rating}" method="post">
+                <div class="mb-3">
+                    <label for="rating" class="form-label">Rating (1 to 5)</label>
+                    <select class="form-select" id="rating" name="rating" required>
+                        <option value="1">1 - Very Dissatisfied</option>
+                        <option value="2">2 - Dissatisfied</option>
+                        <option value="3">3 - Neutral</option>
+                        <option value="4">4 - Satisfied</option>
+                        <option value="5">5 - Very Satisfied</option>
+                    </select>
+                </div>
+                <input type="hidden" name="bid" th:value="${booking.bid}">
+                <button type="submit" class="btn btn-primary">Submit Rating</button>
+            </form>
+        </div>
         <input type="hidden" name="bid" th:value="${booking.bid}">
-    </div>
+    </div><br><br>
     
     <!-- Bootstrap Bundle with Popper -->
     <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

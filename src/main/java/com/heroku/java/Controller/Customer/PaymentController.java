@@ -47,37 +47,6 @@ public class PaymentController {
         return "customer/payment";
     }
 
-    // @PostMapping("/UploadPaymentProof")
-    // public String uploadPaymentProof(HttpSession session, 
-    //                                  @RequestParam("bookingId") int bookingId,
-    //                                  @RequestParam("ppimage") MultipartFile ppimage, 
-    //                                  Booking booking) {
-
-    //     Integer id = (Integer) session.getAttribute("id");
-
-    //     if (id == null) {
-    //         return "redirect:/login";
-    //     }
-
-    //     try {
-    //         booking.setPpbyte(ppimage.getBytes());
-    //         booking.setId(id);
-
-    //         paymentProofDAO.addPaymentProof(booking);
-
-    //         return "redirect:/paymenttrack?bookingId=" + bookingId;
-
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //         // Log the error and redirect to an error page
-    //         return "redirect:/error?message=Failed to process the uploaded file";
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         // Log the error and redirect to an error page
-    //         return "redirect:/error?message=Database error occurred";
-    //     }
-    // }
-
     @PostMapping("/UploadPaymentProof")
 public String uploadPaymentProof(HttpSession session, 
                                  @RequestParam("bid") int bookingId,
