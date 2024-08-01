@@ -155,7 +155,8 @@ public class ViewCustomerBoookingDAO {
     }
 
     public void updatePriceBooking(int bookingId, double price, int sid) throws SQLException {
-        String sql = "UPDATE booking SET bookingprice = ? WHERE bid = ? and sid=?";
+        String sql = "UPDATE booking SET bookingprice = ?, bookingstatus = 'Accepted' WHERE bid = ? AND sid = ?";
+
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

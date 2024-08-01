@@ -43,19 +43,36 @@ public class CustomerViewServiceProviderController {
 
     }
 
-    @PostMapping("/rating")
-    public String submitRating(
-        @RequestParam("bid") int bookingId,
-        @RequestParam("rating") int rating,
+    // @PostMapping("/rating")
+    // public String submitRating(
+    //     @RequestParam("bid") int bookingId,
+    //     @RequestParam("rating") int rating,
 
-        Model model) {
-        try {
-            customerviewServiceProviderDAO.insertRatingBooking(bookingId, rating);
-            //count rating from 
-            model.addAttribute("message", "Rating submitted successfully");
-        } catch (SQLException e) {
-            model.addAttribute("error", "Error submitting rating: " + e.getMessage());
-        }
-        return "redirect:/viewsp";
+    //     Model model) {
+    //     try {
+    //         customerviewServiceProviderDAO.insertRatingBooking(bookingId, rating);
+    //         //count rating from 
+    //         model.addAttribute("message", "Rating submitted successfully");
+    //     } catch (SQLException e) {
+    //         model.addAttribute("error", "Error submitting rating: " + e.getMessage());
+    //     }
+    //     return "redirect:/viewsp";
+    // }
+    @PostMapping("/rating")
+public String submitRating(
+    @RequestParam("bid") int bookingId,
+    @RequestParam("rating") int rating,
+    @RequestParam("rec") String rec,
+    @RequestParam("sid") int sid,
+    Model model) {
+    try {
+
+        System.out.println("recommendation" + rec);
+        customerviewServiceProviderDAO.insertRatingBooking(bookingId, rating, rec, sid);
+        model.addAttribute("message", "Rating submitted successfully");
+    } catch (SQLException e) {
+        model.addAttribute("error", "Error submitting rating: " + e.getMessage());
     }
+    return "redirect:/viewsp";
+}
 }

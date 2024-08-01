@@ -47,39 +47,7 @@
             </div>
         </div>
         
-        <!-- <form action="/UploadPaymentProof" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="bookingId" th:value="${booking.bid}">
-            <div class="mb-3">
-                <label for="paymentMethod" class="form-label">Payment Method</label>
-                <select class="form-select" id="paymentMethod" name="paymentMethod" required>
-                    <option value="" selected>Select Payment Method</option>
-                    <option value="cash">Cash</option>
-                    <option value="qr">QR Code</option>
-                </select>
-            </div>
-
-            <div class="mb-3" id="uploadProof" style="display: none;">
-                <label for="paymentproofs" class="form-label">Upload Payment Proof</label>
-                <input class="form-control" type="file" id="paymentproofs" name="paymentproofs" required>
-            </div>
-
-            <table class="table payment-table">
-                <thead>
-                    <tr>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td th:text="${booking.bookingprice}">Booking Price</td>
-                        <td th:text="${booking.bookingdesc}">Booking Description</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <button type="submit" id="makePaymentButton" class="btn btn-primary" disabled>Make Payment</button>
-        </form> -->
+       
         <form action="/UploadPaymentProof" method="post" enctype="multipart/form-data">
             <input type="hidden" name="bid" th:value="${booking.bid}">
             <div class="mb-3">
@@ -113,6 +81,7 @@
         
             <button type="submit" id="makePaymentButton" class="btn btn-primary" disabled>Make Payment</button>
         </form>
+        
         
         
         

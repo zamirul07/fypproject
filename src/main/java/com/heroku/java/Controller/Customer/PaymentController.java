@@ -24,10 +24,8 @@ public class PaymentController {
 
     @Autowired
     private PaymentProofDAO paymentProofDAO;
-
     @Autowired
     private BookingStatusDAO bookingStatusDAO;
-
     @Autowired
     private BookingDAO bookingDAO;
 
@@ -48,43 +46,39 @@ public class PaymentController {
     }
 
     @PostMapping("/UploadPaymentProof")
-public String uploadPaymentProof(HttpSession session, 
-                                 @RequestParam("bid") int bookingId,
-                                 @RequestParam("ppimage") MultipartFile ppimage, 
-                                 Booking booking) {
-
-    Integer id = (Integer) session.getAttribute("id");
-
-    if (id == null) {
-        return "redirect:/login";
-    }
-
-    try {
-        booking.setPpbyte(ppimage.getBytes()); // Set the byte array
-        booking.setId(id);
-
-        paymentProofDAO.addPaymentProof(booking);
-
-        return "redirect:/paymenttrack?bookingId=" + bookingId;
-
-    } catch (IOException e) {
-        e.printStackTrace();
-        // Log the error and redirect to an error page
-        return "redirect:/error?message=Failed to process the uploaded file";
-    } catch (SQLException e) {
-        e.printStackTrace();
-        // Log the error and redirect to an error page
-        return "redirect:/error?message=Database error occurred";
-    }
-}
-
+    public String uploadPaymentProof(HttpSession session,
+                                     @RequestParam("bid") int bookingId,
+                                     @RequestParam("ppimage") MultipartFile ppimage,
+                                     Booking booking) {
+        Integer id = (Integer) session.getAttribute("id");
+        System.out.println("id"+id);
+        System.out.println("bid"+ bookingId);
+        if (id == null) {
+            return "redirect:/login";
+        }
+        try {
+            booking.setPpbyte(ppimage.getBytes()); // Set the byte array
+            booking.setBid(bookingId); // Set bookingId to booking
+            booking.setId(id);
+    
+            paymentProofDAO.addPaymentProof(booking);
+            return "redirect:/paymenttrack?bid=" + bookingId;
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Log the error and redirect to an error page
+            return "redirect:/error?message=Failed to process the uploaded file";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Log the error and redirect to an error page
+            return "redirect:/error?message=Database error occurred";
+        }}
 
     @GetMapping("/paymenttrack")
     public String getBookingDetails(@RequestParam("bid") int bid, Model model) {
         try {
             System.out.println("track: " + bid);
             Booking booking = paymentProofDAO.getBookingDetails(bid);
-
+            System.out.println("sid" + booking.getSid());
             if (booking != null) {
                 model.addAttribute("booking", booking);
                 model.addAttribute("bid", bid);
@@ -97,5 +91,4 @@ public String uploadPaymentProof(HttpSession session,
         }
         return "customer/paymenttrack";
     }
-
 }

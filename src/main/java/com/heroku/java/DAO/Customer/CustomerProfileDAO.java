@@ -71,9 +71,4 @@ public class CustomerProfileDAO {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'customerpassword'");
     }
-
-
-
-
-
 }

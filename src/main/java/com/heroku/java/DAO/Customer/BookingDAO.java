@@ -49,6 +49,7 @@ public class BookingDAO {
 
         public List<Booking> getBookingByBookingId(int bid) throws SQLException {
         List<Booking> bookings = new ArrayList<>();
+        
         System.out.println("bid get: " + bid);
         
         String sql = "SELECT b.bid, b.id, b.sid, b.bookingdate, b.bookingdesc, b.bookingstatus, b.bookingprice, b.paymentstatus, " +

@@ -62,24 +62,34 @@ public class ViewPaymentController {
     }
 
     @PostMapping("/approvePayment")
-    public String approvePayment(@RequestParam("bid") int bid, @RequestParam("id") int id, @RequestParam("sid") int sid,
-            @RequestParam("action") String action, String paymentStatus,
+    public String approvePayment(
+            @RequestParam("bid") int bid, 
+            @RequestParam("id") int id, 
+            @RequestParam("sid") int sid,
+            @RequestParam("action") String action,
             Model model) {
-
-        // Booking booking = viewPaymentDAO.updatepaymentstatus(bid, sid, id, value);
-        System.out.println("bid=" + bid);
-        // String paymentStatus;
-
+    
+        String paymentStatus;
+    
         if ("approve".equals(action)) {
             paymentStatus = "Paid";
         } else if ("reject".equals(action)) {
             paymentStatus = "Rejected";
+        } else {
+            model.addAttribute("error", "Invalid action");
+            return "errorPage"; // Replace with your error page URL
         }
+    
         try {
-            viewPaymentDAO.updatepaymentstatus(bid, sid, id, paymentStatus);
+            viewPaymentDAO.updatepaymentstatus(bid, id, sid, paymentStatus);
+            System.out.println("Payment status updated for bid: " + bid);
         } catch (SQLException e) {
             e.printStackTrace();
+            model.addAttribute("error", "Database update failed");
+            return "errorPage"; // Replace with your error page URL
         }
+    
         return "redirect:/viewpayment";  // Replace with your payment page URL
     }
+    
 }

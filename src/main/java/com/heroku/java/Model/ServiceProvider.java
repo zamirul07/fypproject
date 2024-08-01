@@ -16,6 +16,7 @@ public class ServiceProvider {
     public MultipartFile qrcodemgs;
     String qrcodemage;
     private Double average_rating;
+    private String rec;
 
     public ServiceProvider() {
     }
@@ -47,7 +48,7 @@ public class ServiceProvider {
 
     }
 
-    public ServiceProvider(Integer sid, String spfullname, String email, String password, String address, String icnumber, String phonenumber, String service_name, Double average_rating){
+    public ServiceProvider(Integer sid, String spfullname, String email, String password, String address, String icnumber, String phonenumber, String service_name, Double average_rating, String rec){
         this.sid = sid;
         this.spfullname = spfullname;
         this.email = email;
@@ -57,6 +58,7 @@ public class ServiceProvider {
         this.phonenumber = phonenumber;
         this.service_name = service_name;
         this.average_rating = average_rating;
+        this.rec = rec;
 
     }
 
@@ -168,5 +170,13 @@ public class ServiceProvider {
 
     public void setAverage_rating(Double average_rating) {
         this.average_rating = average_rating;
+    }
+
+    public String getRec() {
+        return this.rec;
+    }
+
+    public void setRec(String rec) {
+        this.rec = rec;
     }
 }

@@ -124,4 +124,28 @@ public List<Booking> getBookingByBookingId(int bid) throws SQLException {
         return bookings;
     }
 
+    public List<ServiceProvider> getrecommendation(int sid) throws SQLException {
+        List<ServiceProvider> sp = new ArrayList<>();
+        String sql = "SELECT rec FROM serviceprovider where sid = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, sid);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                ServiceProvider sp1 = new ServiceProvider();
+
+                sp1.setRec(resultSet.getString("rec"));
+
+                sp.add(sp1);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching bookings by sid ID: " + sid, e);
+        }
+
+        return sp;
+    }
+
 }

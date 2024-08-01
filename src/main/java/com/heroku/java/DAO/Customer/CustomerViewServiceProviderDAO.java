@@ -38,11 +38,12 @@ public List<ServiceProvider> customerviewServiceProvider() throws SQLException{
                 String icnumber = resultSet.getString("icnumber");
                 String phonenumber = resultSet.getString("phonenumber");
                 String service_name = resultSet.getString("service_name");   
-                Double average_rating = resultSet.getDouble("average_rating");  
+                Double average_rating = resultSet.getDouble("average_rating"); 
+                String rec = resultSet.getString("rec");
                            
                 
 
-                ServiceProvider serviceprovider = new ServiceProvider(sid, spfullname, email, password, address, icnumber, phonenumber, service_name,average_rating);
+                ServiceProvider serviceprovider = new ServiceProvider(sid, spfullname, email, password, address, icnumber, phonenumber, service_name,average_rating,rec);
                 serviceproviderList.add(serviceprovider);
             }
         } catch (SQLException e) {
@@ -55,31 +56,67 @@ public List<ServiceProvider> customerviewServiceProvider() throws SQLException{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void insertRatingBooking(int bookingId, int rating) throws SQLException {
+    // public void insertRatingBooking(int bookingId, int rating) throws SQLException {
+    //     String updateBookingSql = "UPDATE booking SET rating = ? WHERE bid = ?";
+    //     String calculateAvgRatingSql = "SELECT sid, AVG(rating) AS avg_rating FROM booking WHERE rating IS NOT NULL GROUP BY sid";
+    //     String updateServiceProviderSql = "UPDATE serviceprovider SET average_rating = ? WHERE sid = ?";
+
+    //     try (Connection connection = dataSource.getConnection(); 
+    //          PreparedStatement updateBookingStmt = connection.prepareStatement(updateBookingSql);
+    //          PreparedStatement calculateAvgRatingStmt = connection.prepareStatement(calculateAvgRatingSql);
+    //          PreparedStatement updateServiceProviderStmt = connection.prepareStatement(updateServiceProviderSql)) {
+
+    //         // Update the booking rating
+    //         updateBookingStmt.setInt(1, rating);
+    //         updateBookingStmt.setInt(2, bookingId);
+    //         updateBookingStmt.executeUpdate();
+
+    //         // Calculate the average rating for each service provider
+    //         ResultSet avgRatingResultSet = calculateAvgRatingStmt.executeQuery();
+    //         while (avgRatingResultSet.next()) {
+    //             int serviceProviderId = avgRatingResultSet.getInt("sid");
+    //             double averageRating = avgRatingResultSet.getDouble("avg_rating");
+
+    //             // Update the average rating in the serviceprovider table
+    //             updateServiceProviderStmt.setDouble(1, averageRating);
+    //             updateServiceProviderStmt.setInt(2, serviceProviderId);
+    //             updateServiceProviderStmt.executeUpdate();
+    //         }
+    //     }
+    // }
+
+    public void insertRatingBooking(int bookingId, int rating, String rec, int sid) throws SQLException {
         String updateBookingSql = "UPDATE booking SET rating = ? WHERE bid = ?";
         String calculateAvgRatingSql = "SELECT sid, AVG(rating) AS avg_rating FROM booking WHERE rating IS NOT NULL GROUP BY sid";
-        String updateServiceProviderSql = "UPDATE serviceprovider SET average_rating = ? WHERE sid = ?";
+        String updateServiceProviderSql = "UPDATE serviceprovider SET average_rating = ? , rec = ? WHERE sid = ?";
 
+        System.out.println("rating"+ rating);
+        System.out.println("rec"+ rec);
+    
         try (Connection connection = dataSource.getConnection(); 
+       
              PreparedStatement updateBookingStmt = connection.prepareStatement(updateBookingSql);
              PreparedStatement calculateAvgRatingStmt = connection.prepareStatement(calculateAvgRatingSql);
              PreparedStatement updateServiceProviderStmt = connection.prepareStatement(updateServiceProviderSql)) {
-
-            // Update the booking rating
+    
+            // Update the booking rating and recommendation
             updateBookingStmt.setInt(1, rating);
             updateBookingStmt.setInt(2, bookingId);
-            updateBookingStmt.executeUpdate();
 
+            updateBookingStmt.executeUpdate();
+    
             // Calculate the average rating for each service provider
             ResultSet avgRatingResultSet = calculateAvgRatingStmt.executeQuery();
             while (avgRatingResultSet.next()) {
                 int serviceProviderId = avgRatingResultSet.getInt("sid");
                 double averageRating = avgRatingResultSet.getDouble("avg_rating");
-
+    
                 // Update the average rating in the serviceprovider table
                 updateServiceProviderStmt.setDouble(1, averageRating);
-                updateServiceProviderStmt.setInt(2, serviceProviderId);
+                updateServiceProviderStmt.setString(2, rec);
+                updateServiceProviderStmt.setInt(3, sid);
                 updateServiceProviderStmt.executeUpdate();
+
             }
         }
     }

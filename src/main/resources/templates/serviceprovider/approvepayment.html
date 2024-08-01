@@ -99,33 +99,34 @@
       </div>
     </div>
     <div class="content">
-        <h2 class="mb-4">Customer Payment</h2>
-        <form th:action="@{/approvePayment}" method="post">
-            <input type="hidden" name="bid" th:value="${booking.bid}"/>
-            <input type="hidden" name="id" th:value="${booking.id}"/>
-            <input type="hidden" name="sid" th:value="${booking.sid}"/>
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td th:text="${booking.bookingprice}"></td>
-                    <td th:text="${booking.paymentstatus}"></td>
-                    <td>
-                        <button type="submit" class="btn btn-primary" name="action" value="approve">Approve Payment</button>
-                        <button type="submit" class="btn btn-danger" name="action" value="reject">Reject Payment</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
+      <h2 class="mb-4">Customer Payment</h2>
+      <form th:action="@{/approvePayment}" method="post">
+        <input type="hidden" name="bid" th:value="${booking.bid}" />
+        <input type="hidden" name="id" th:value="${booking.id}" />
+        <input type="hidden" name="sid" th:value="${booking.sid}" />
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Amount</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td th:text="${booking.bookingprice}"></td>
+              <td th:text="${booking.paymentstatus}"></td>
+              <td>
+                <button type="submit" class="btn btn-primary" name="action" value="approve">Approve Payment</button>
+                <button type="submit" class="btn btn-danger" name="action" value="reject">Reject Payment</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </form>
+    
     </div>
-    <br /><br />
+    <br ><br >
 
     <!-- Bootstrap Bundle with Popper -->
     <script

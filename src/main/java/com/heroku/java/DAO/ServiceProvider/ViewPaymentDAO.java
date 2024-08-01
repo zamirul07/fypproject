@@ -32,8 +32,7 @@ public class ViewPaymentDAO {
                 + "JOIN serviceprovider sp ON b.sid = sp.sid "
                 + "WHERE b.sid = ?";
 
-        try (Connection connection = dataSource.getConnection(); 
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, sid);
             ResultSet resultSet = statement.executeQuery();
@@ -46,7 +45,6 @@ public class ViewPaymentDAO {
                         resultSet.getDouble("bookingprice"),
                         resultSet.getString("paymentstatus"),
                         resultSet.getInt("id")
-                       
                 );
                 bookings.add(booking);
             }
@@ -104,22 +102,26 @@ public class ViewPaymentDAO {
         }
     }
 
-    public void updatepaymentstatus(int bid, int id, int sid, String paymentstatus) throws SQLException {
-        String sql = "UPDATE Booking SET paymentstatus = ? WHERE bid = ? and sid= ? and id = ?";
+    public void updatepaymentstatus(int bid, int id, int sid, String paymentStatus) throws SQLException {
+        System.out.println("Updating payment status for bid: " + bid);
+        String sql = "UPDATE booking SET paymentstatus = ? WHERE bid = ? AND sid = ? AND id = ?";
 
-        try {
-            Connection connection = dataSource.getConnection(); 
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, paymentstatus);
+            statement.setString(1, paymentStatus);
             statement.setInt(2, bid);
             statement.setInt(3, sid);
             statement.setInt(4, id);
 
-            statement.executeUpdate();
-        } catch (Exception e) {
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("No rows updated. Check if the row exists.");
+            } else {
+                System.out.println("Payment status updated successfully.");
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
+            throw e; // Re-throw to ensure controller handles the error
         }
     }
-
 }
